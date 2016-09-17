@@ -300,51 +300,13 @@
 
       
         
-          
-            <h2 id="修改hosts实现科学上网"><a href="#修改hosts实现科学上网" class="headerlink" title="修改hosts实现科学上网"></a>修改hosts实现科学上网</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>国内无法访问Google实在感觉不幸福，之前一直想通过搭建一个vps+shadowsocks来实现科学上网，但是需要一定的花费，今天偶然在Cnode社区上发现有人分享了一个关于修改<a href="http://www.wikiwand.com/zh/Hosts文件#" target="_blank" rel="external">hosts</a>的repositories，地址是<a href="https://github.com/racaljk/hosts" target="_blank" rel="external">https://github.com/racaljk/hosts</a>。</p>
-<p>系统： win10、unbuntu 16.04</p>
-<h3 id="修改方法"><a href="#修改方法" class="headerlink" title="修改方法"></a>修改方法</h3><h4 id="1-首先clone或者download整个项目"><a href="#1-首先clone或者download整个项目" class="headerlink" title="1. 首先clone或者download整个项目"></a>1. 首先clone或者download整个项目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/racaljk/hosts.git</span><br></pre></td></tr></table></figure>
-<p>或者在github上download这个项目</p>
-<h4 id="2-更换本地hosts文件"><a href="#2-更换本地hosts文件" class="headerlink" title="2. 更换本地hosts文件"></a>2. 更换本地hosts文件</h4><p>！！！注意：  更换hosts文件时注意备份原hosts文件</p>
-<p>hosts路径：</p>
-<p>windows： %SystemRoot%\System32\drivers\etc\hosts</p>
-<p>Linux： /etc/hosts</p>
-<p>其他具体平台请参见：<br><a href="http://www.wikiwand.com/zh/Hosts文件#/.E6.96.87.E4.BB.B6.E4.BD.8D.E7.BD.AE.E5.8F.8A.E9.BB.98.E8.AE.A4.E5.86.85.E5.AE.B9" target="_blank" rel="external">http://www.wikiwand.com/zh/Hosts文件#/.E6.96.87.E4.BB.B6.E4.BD.8D.E7.BD.AE.E5.8F.8A.E9.BB.98.E8.AE.A4.E5.86.85.E5.AE.B9</a></p>
-<p>对照上面具体系统的host路径，使用github上下载的hosts文件覆盖替换本地的hosts文件</p>
-<blockquote>
-<p>关于在linux系统下，我是使用github项目中提供的工具进行替换的，下文在详细介绍</p>
-</blockquote>
-<h3 id="3-关于linux（ubuntu）系统使用工具替换hosts文件"><a href="#3-关于linux（ubuntu）系统使用工具替换hosts文件" class="headerlink" title="3. 关于linux（ubuntu）系统使用工具替换hosts文件"></a>3. 关于linux（ubuntu）系统使用工具替换hosts文件</h3><p>在我们从github下载的文件中有一个叫做tools的文件夹，这里我们使用lhosts这个工具。</p>
-<p>lhosts这个工具是一个Linux平台自动部署脚本</p>
-<h5 id="1-首先我们为脚本添加科执行权限"><a href="#1-首先我们为脚本添加科执行权限" class="headerlink" title="#1 首先我们为脚本添加科执行权限"></a>#1 首先我们为脚本添加科执行权限</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chmod u+x lhosts</span><br></pre></td></tr></table></figure>
-<h5 id="2-然后执行"><a href="#2-然后执行" class="headerlink" title="#2 然后执行"></a>#2 然后执行</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./lhosts -h</span><br></pre></td></tr></table></figure>
-<p>这条命令可以看到这个工具的帮助信息，在帮助信息中其实已经详细说明了这个软件的使用方法，如图：</p>
-<p><img src="../imgs/20160917_1.png" alt=""></p>
-<p>我们可以看到lhosts软件为我们提供了一些选项，并给出了参考，自定义源的实例</p>
-<p>接下来我们在terminal中继续输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./lhosts -qu https://coding.net/u/scaffrey/p/hosts/git/raw/master/hosts</span><br></pre></td></tr></table></figure>
-<p>此时我们已经替换了linux系统的hosts文件，现在小伙伴们可以尝试访问一下Google，是不是感觉终于可以愉快的与Google玩耍了</p>
-<p>等等。。。。</p>
-<p>为什么我访问google并不能成功？</p>
-<h4 id="4-关于部分在替换了hosts文件后依旧无法正常访问Google问题"><a href="#4-关于部分在替换了hosts文件后依旧无法正常访问Google问题" class="headerlink" title="4. 关于部分在替换了hosts文件后依旧无法正常访问Google问题"></a>4. 关于部分在替换了hosts文件后依旧无法正常访问Google问题</h4><p>之前，我也遇到了相同的问题，但是小伙伴们可以尝试访问一下这里： <a href="https://play.google.com" target="_blank" rel="external">https://play.google.com</a></p>
-<p>你一定会说：咦？google商店怎么就可以访问了呢？？？</p>
-<p>没事，不急，我们来看看是哪里出了问题。</p>
-<p>我是这样做的，在Terminal中去ping Google的域名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ping www.google.com</span><br></pre></td></tr></table></figure>
-<p>发现这是可以ping通的，这是因为Google走的是https，而我们自己的浏览器默认的却是http，所以无法连接。</p>
-<h5 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h5><p>HSTS（HTTP STRICT Transport Security）设置通过https访问Google</p>
-<p>HSTS 允许一个https网站，要求浏览器总是通过https来访问它</p>
-<p>详细步骤： </p>
-<h5 id="1-在chrome的地址栏输入"><a href="#1-在chrome的地址栏输入" class="headerlink" title="#1 在chrome的地址栏输入"></a>#1 在chrome的地址栏输入</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chrome://net-internals/#hsts</span><br></pre></td></tr></table></figure>
-<pre><code>进入HSTS管理界面
-</code></pre><h5 id="2-在HSTS选项卡下的Domain中输入www-google-com-或-www-google-com-hk-，然后点击Add按钮，这样就可以通过https来访问Google了"><a href="#2-在HSTS选项卡下的Domain中输入www-google-com-或-www-google-com-hk-，然后点击Add按钮，这样就可以通过https来访问Google了" class="headerlink" title="#2 在HSTS选项卡下的Domain中输入www.google.com(或 www.google.com.hk)，然后点击Add按钮，这样就可以通过https来访问Google了"></a>#2 在HSTS选项卡下的Domain中输入<code>www.google.com(或 www.google.com.hk)</code>，然后点击Add按钮，这样就可以通过https来访问Google了</h5><blockquote>
-<p>备注： 普通的http浏览时不安全，用户和服务器之前的通讯会被第三方监听和干扰，对于Google来说，在进行Google搜索词语时会被第三方截获。在https的Google搜索中，用户的信息无法被第三方获取，也不会出现数据泄露的问题。还有一个好处就是可以搜索任意关键词而不被重置。</p>
-</blockquote>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上就是通过修改hosts文件来实现Google的访问，但是目前还一些问题，比如youtube视频可能会比较慢，甚至无法观看。不过也有一些实现了可以全速观看Youtube视频，不过作者说安全性不高，使用请慎重</p>
-<p>Youtube全速播放解决方案地址：<a href="https://github.com/fengixng/google-hosts" target="_blank" rel="external">https://github.com/fengixng/google-hosts</a></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>感谢分享<br>hosts介绍： <a href="http://www.wikiwand.com/zh/Hosts文件#" target="_blank" rel="external">http://www.wikiwand.com/zh/Hosts文件#</a><br>hosts项目分享(github地址): <a href="https://github.com/racaljk/hosts" target="_blank" rel="external">https://github.com/racaljk/hosts</a><br>hosts项目分享(coding地址): <a href="https://coding.net/u/scaffrey/p/hosts/git" target="_blank" rel="external">https://coding.net/u/scaffrey/p/hosts/git</a><br>hosts修改后依旧无法访问问题解决方案: <a href="http://blog.csdn.net/qq_21398167/article/details/51462590" target="_blank" rel="external">http://blog.csdn.net/qq_21398167/article/details/51462590</a></p>
-
-          
+          <h2 id="&#x4FEE;&#x6539;hosts&#x5B9E;&#x73B0;&#x79D1;&#x5B66;&#x4E0A;&#x7F51;"><a href="#&#x4FEE;&#x6539;hosts&#x5B9E;&#x73B0;&#x79D1;&#x5B66;&#x4E0A;&#x7F51;" class="headerlink" title="&#x4FEE;&#x6539;hosts&#x5B9E;&#x73B0;&#x79D1;&#x5B66;&#x4E0A;&#x7F51;"></a>&#x4FEE;&#x6539;hosts&#x5B9E;&#x73B0;&#x79D1;&#x5B66;&#x4E0A;&#x7F51;</h2><h3 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h3><p>&#x56FD;&#x5185;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;Google&#x5B9E;&#x5728;&#x611F;&#x89C9;&#x4E0D;&#x5E78;&#x798F;&#xFF0C;&#x4E4B;&#x524D;&#x4E00;&#x76F4;&#x60F3;&#x901A;&#x8FC7;&#x642D;&#x5EFA;&#x4E00;&#x4E2A;vps+shadowsocks&#x6765;&#x5B9E;&#x73B0;&#x79D1;&#x5B66;&#x4E0A;&#x7F51;&#xFF0C;&#x4F46;&#x662F;&#x9700;&#x8981;&#x4E00;&#x5B9A;&#x7684;&#x82B1;&#x8D39;&#xFF0C;&#x4ECA;&#x5929;&#x5076;&#x7136;&#x5728;Cnode&#x793E;&#x533A;&#x4E0A;&#x53D1;&#x73B0;&#x6709;&#x4EBA;&#x5206;&#x4EAB;&#x4E86;&#x4E00;&#x4E2A;&#x5173;&#x4E8E;&#x4FEE;&#x6539;<a href="http://www.wikiwand.com/zh/Hosts&#x6587;&#x4EF6;#">hosts</a>&#x7684;repositories&#xFF0C;&#x5730;&#x5740;&#x662F;<a href="https://github.com/racaljk/hosts">https://github.com/racaljk/hosts</a>&#x3002;</p>
+<p>&#x7CFB;&#x7EDF;&#xFF1A; win10&#x3001;unbuntu 16.04<br></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/17/修改hosts实现科学上网/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -406,7 +368,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-31T13:37:12+08:00" content="2016-07-31">
+            <time itemprop="dateCreated" datetime="2016-07-31T18:08:58+08:00" content="2016-07-31">
               2016-07-31
             </time>
           </span>
@@ -454,18 +416,12 @@
 
       
         
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
+          <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/31/hello-world/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
