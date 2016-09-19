@@ -1,0 +1,50 @@
+## node-playbook(译)
+
+> 地址: 
+> https://github.com/HiFaraz/node-playbook#contents
+
+### Node.js Playbook
+
+Node.js PlayBook 是一个使用Node.js来开发的“起手”指南。
+
+它将在两方面来帮助你：
+
+- 解决问题：如果你有特需要，它可以给你一个对大部分人起作用的解决方案。
+- 发现新的想法： 如果你只是浏览，你将了解可以帮助到你的项目的新东西。
+
+#### 面向人群
+
+- 那些只是想避免很多麻烦来开始一个项目的*初学者*
+- 那些想要一个“起手”来指导Node.js系统不熟悉的地方的*有一定经验的程序员*
+
+### 如何使用
+
+这只是一个学习工具，并且你必须明白它的限制。
+- 阅读官方文档和教程来实现任何解决方案。此篇文章并不能代替它们。
+- 此篇文章不会教授如何编程
+- 此篇文章不会教授 JavaScript
+- 此篇文章不是使用Node.js开发的唯一方式。使用这篇文章来开始，并且保持学习关于其他使用Node.js解决问题的方式
+- 此篇文章不是使用Node.js开发最好的方式。它只是一种减少大量学习开销，从而足够使你起手的方式。一旦你的项目变得复杂，你需要寻找一种更好的解决方案来符合你的需要。
+- 并非所有建议是专门针对Node.js的
+
+不要把这篇文章当作你唯一的学习资源。此篇文章只能给你最广泛适用的解决方案。随着你的成长，你应该去探索其他的解决方案。这不是Node.js开发的全部和最终所有。它只是你学习经验和探索的一部分，而不是全部。
+
+### 黄金法则：尽可能避免coding
+
+做最佳懒惰。这里只有两个原则：
+1. 完成任务的最快方式是什么也不做
+	- 问你自己没有它你是否能活
+	- 越少的代码意味着越少的bug
+	- 也可以看看这些：
+		- [You aren't gonna need it (YAGNI)](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it)
+		- [Customer development](http://www.startuplessonslearned.com/2008/11/what-is-customer-development.html)
+		- [Minimum viable product (MVP)](http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html)
+2. 完成任务第二快的方式是让其他人去做
+	- 例如，这篇文章就是一个使用别人作品获得成功的例子
+	- 如果你可以逃脱它，使用[Node.js core API](https://nodejs.org/api/)
+	- 使用预生成的代码块，例如[npm packages](https://www.npmjs.com/)
+		- 确定你使用了高质量的依赖
+
+### 通则
+
+本节覆盖了无论你的开发目标是什么
