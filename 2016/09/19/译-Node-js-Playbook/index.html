@@ -1,0 +1,729 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="翻译,Node.js," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/ArthurFree.png?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="node-playbook(&amp;#x8BD1;)
+&amp;#x5730;&amp;#x5740;:https://github.com/HiFaraz/node-playbook#contents
+
+Node.js PlaybookNode.js PlayBook &amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x4F7F;&amp;#x7528;Node.js&amp;#x6765;&amp;#x5F00;&amp;#x53D1;&amp;#x7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="译: Node.js Playbook">
+<meta property="og:url" content="http://yoursite.com/2016/09/19/译-Node-js-Playbook/index.html">
+<meta property="og:site_name" content="ArthurFree's BLOG">
+<meta property="og:description" content="node-playbook(&amp;#x8BD1;)
+&amp;#x5730;&amp;#x5740;:https://github.com/HiFaraz/node-playbook#contents
+
+Node.js PlaybookNode.js PlayBook &amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x4F7F;&amp;#x7528;Node.js&amp;#x6765;&amp;#x5F00;&amp;#x53D1;&amp;#x7">
+<meta property="og:updated_time" content="2016-09-19T15:16:08.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="译: Node.js Playbook">
+<meta name="twitter:description" content="node-playbook(&amp;#x8BD1;)
+&amp;#x5730;&amp;#x5740;:https://github.com/HiFaraz/node-playbook#contents
+
+Node.js PlaybookNode.js PlayBook &amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x4F7F;&amp;#x7528;Node.js&amp;#x6765;&amp;#x5F00;&amp;#x53D1;&amp;#x7">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/19/译-Node-js-Playbook/"/>
+
+  <title> 译: Node.js Playbook | ArthurFree's BLOG </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-81613167-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ArthurFree's BLOG</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                译: Node.js Playbook
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-19T23:09:32+08:00" content="2016-09-19">
+              2016-09-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/19/译-Node-js-Playbook/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/19/译-Node-js-Playbook/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="node-playbook-&#x8BD1;"><a href="#node-playbook-&#x8BD1;" class="headerlink" title="node-playbook(&#x8BD1;)"></a>node-playbook(&#x8BD1;)</h2><blockquote>
+<p>&#x5730;&#x5740;:<br><a href="https://github.com/HiFaraz/node-playbook#contents" target="_blank" rel="external">https://github.com/HiFaraz/node-playbook#contents</a></p>
+</blockquote>
+<h3 id="Node-js-Playbook"><a href="#Node-js-Playbook" class="headerlink" title="Node.js Playbook"></a>Node.js Playbook</h3><p>Node.js PlayBook &#x662F;&#x4E00;&#x4E2A;&#x4F7F;&#x7528;Node.js&#x6765;&#x5F00;&#x53D1;&#x7684;&#x201C;&#x8D77;&#x624B;&#x201D;&#x6307;&#x5357;&#x3002;<br><a id="more"></a><br>&#x5B83;&#x5C06;&#x5728;&#x4E24;&#x65B9;&#x9762;&#x6765;&#x5E2E;&#x52A9;&#x4F60;&#xFF1A;</p>
+<ul>
+<li>&#x89E3;&#x51B3;&#x95EE;&#x9898;&#xFF1A;&#x5982;&#x679C;&#x4F60;&#x6709;&#x7279;&#x9700;&#x8981;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x7ED9;&#x4F60;&#x4E00;&#x4E2A;&#x5BF9;&#x5927;&#x90E8;&#x5206;&#x4EBA;&#x8D77;&#x4F5C;&#x7528;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</li>
+<li>&#x53D1;&#x73B0;&#x65B0;&#x7684;&#x60F3;&#x6CD5;&#xFF1A; &#x5982;&#x679C;&#x4F60;&#x53EA;&#x662F;&#x6D4F;&#x89C8;&#xFF0C;&#x4F60;&#x5C06;&#x4E86;&#x89E3;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x5230;&#x4F60;&#x7684;&#x9879;&#x76EE;&#x7684;&#x65B0;&#x4E1C;&#x897F;&#x3002;</li>
+</ul>
+<h4 id="&#x9762;&#x5411;&#x4EBA;&#x7FA4;"><a href="#&#x9762;&#x5411;&#x4EBA;&#x7FA4;" class="headerlink" title="&#x9762;&#x5411;&#x4EBA;&#x7FA4;"></a>&#x9762;&#x5411;&#x4EBA;&#x7FA4;</h4><ul>
+<li>&#x90A3;&#x4E9B;&#x53EA;&#x662F;&#x60F3;&#x907F;&#x514D;&#x5F88;&#x591A;&#x9EBB;&#x70E6;&#x6765;&#x5F00;&#x59CB;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x7684;<em>&#x521D;&#x5B66;&#x8005;</em></li>
+<li>&#x90A3;&#x4E9B;&#x60F3;&#x8981;&#x4E00;&#x4E2A;&#x201C;&#x8D77;&#x624B;&#x201D;&#x6765;&#x6307;&#x5BFC;Node.js&#x7CFB;&#x7EDF;&#x4E0D;&#x719F;&#x6089;&#x7684;&#x5730;&#x65B9;&#x7684;<em>&#x6709;&#x4E00;&#x5B9A;&#x7ECF;&#x9A8C;&#x7684;&#x7A0B;&#x5E8F;&#x5458;</em></li>
+</ul>
+<h3 id="&#x5982;&#x4F55;&#x4F7F;&#x7528;"><a href="#&#x5982;&#x4F55;&#x4F7F;&#x7528;" class="headerlink" title="&#x5982;&#x4F55;&#x4F7F;&#x7528;"></a>&#x5982;&#x4F55;&#x4F7F;&#x7528;</h3><p>&#x8FD9;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x5B66;&#x4E60;&#x5DE5;&#x5177;&#xFF0C;&#x5E76;&#x4E14;&#x4F60;&#x5FC5;&#x987B;&#x660E;&#x767D;&#x5B83;&#x7684;&#x9650;&#x5236;&#x3002;</p>
+<ul>
+<li>&#x9605;&#x8BFB;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x548C;&#x6559;&#x7A0B;&#x6765;&#x5B9E;&#x73B0;&#x4EFB;&#x4F55;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;&#x6B64;&#x7BC7;&#x6587;&#x7AE0;&#x5E76;&#x4E0D;&#x80FD;&#x4EE3;&#x66FF;&#x5B83;&#x4EEC;&#x3002;</li>
+<li>&#x6B64;&#x7BC7;&#x6587;&#x7AE0;&#x4E0D;&#x4F1A;&#x6559;&#x6388;&#x5982;&#x4F55;&#x7F16;&#x7A0B;</li>
+<li>&#x6B64;&#x7BC7;&#x6587;&#x7AE0;&#x4E0D;&#x4F1A;&#x6559;&#x6388; JavaScript</li>
+<li>&#x6B64;&#x7BC7;&#x6587;&#x7AE0;&#x4E0D;&#x662F;&#x4F7F;&#x7528;Node.js&#x5F00;&#x53D1;&#x7684;&#x552F;&#x4E00;&#x65B9;&#x5F0F;&#x3002;&#x4F7F;&#x7528;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x6765;&#x5F00;&#x59CB;&#xFF0C;&#x5E76;&#x4E14;&#x4FDD;&#x6301;&#x5B66;&#x4E60;&#x5173;&#x4E8E;&#x5176;&#x4ED6;&#x4F7F;&#x7528;Node.js&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x5F0F;</li>
+<li>&#x6B64;&#x7BC7;&#x6587;&#x7AE0;&#x4E0D;&#x662F;&#x4F7F;&#x7528;Node.js&#x5F00;&#x53D1;&#x6700;&#x597D;&#x7684;&#x65B9;&#x5F0F;&#x3002;&#x5B83;&#x53EA;&#x662F;&#x4E00;&#x79CD;&#x51CF;&#x5C11;&#x5927;&#x91CF;&#x5B66;&#x4E60;&#x5F00;&#x9500;&#xFF0C;&#x4ECE;&#x800C;&#x8DB3;&#x591F;&#x4F7F;&#x4F60;&#x8D77;&#x624B;&#x7684;&#x65B9;&#x5F0F;&#x3002;&#x4E00;&#x65E6;&#x4F60;&#x7684;&#x9879;&#x76EE;&#x53D8;&#x5F97;&#x590D;&#x6742;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x5BFB;&#x627E;&#x4E00;&#x79CD;&#x66F4;&#x597D;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x6765;&#x7B26;&#x5408;&#x4F60;&#x7684;&#x9700;&#x8981;&#x3002;</li>
+<li>&#x5E76;&#x975E;&#x6240;&#x6709;&#x5EFA;&#x8BAE;&#x662F;&#x4E13;&#x95E8;&#x9488;&#x5BF9;Node.js&#x7684;</li>
+</ul>
+<p>&#x4E0D;&#x8981;&#x628A;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4F5C;&#x4F60;&#x552F;&#x4E00;&#x7684;&#x5B66;&#x4E60;&#x8D44;&#x6E90;&#x3002;&#x6B64;&#x7BC7;&#x6587;&#x7AE0;&#x53EA;&#x80FD;&#x7ED9;&#x4F60;&#x6700;&#x5E7F;&#x6CDB;&#x9002;&#x7528;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;&#x968F;&#x7740;&#x4F60;&#x7684;&#x6210;&#x957F;&#xFF0C;&#x4F60;&#x5E94;&#x8BE5;&#x53BB;&#x63A2;&#x7D22;&#x5176;&#x4ED6;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;&#x8FD9;&#x4E0D;&#x662F;Node.js&#x5F00;&#x53D1;&#x7684;&#x5168;&#x90E8;&#x548C;&#x6700;&#x7EC8;&#x6240;&#x6709;&#x3002;&#x5B83;&#x53EA;&#x662F;&#x4F60;&#x5B66;&#x4E60;&#x7ECF;&#x9A8C;&#x548C;&#x63A2;&#x7D22;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5168;&#x90E8;&#x3002;</p>
+<h3 id="&#x9EC4;&#x91D1;&#x6CD5;&#x5219;&#xFF1A;&#x5C3D;&#x53EF;&#x80FD;&#x907F;&#x514D;coding"><a href="#&#x9EC4;&#x91D1;&#x6CD5;&#x5219;&#xFF1A;&#x5C3D;&#x53EF;&#x80FD;&#x907F;&#x514D;coding" class="headerlink" title="&#x9EC4;&#x91D1;&#x6CD5;&#x5219;&#xFF1A;&#x5C3D;&#x53EF;&#x80FD;&#x907F;&#x514D;coding"></a>&#x9EC4;&#x91D1;&#x6CD5;&#x5219;&#xFF1A;&#x5C3D;&#x53EF;&#x80FD;&#x907F;&#x514D;coding</h3><p>&#x505A;&#x6700;&#x4F73;&#x61D2;&#x60F0;&#x3002;&#x8FD9;&#x91CC;&#x53EA;&#x6709;&#x4E24;&#x4E2A;&#x539F;&#x5219;&#xFF1A;</p>
+<ol>
+<li>&#x5B8C;&#x6210;&#x4EFB;&#x52A1;&#x7684;&#x6700;&#x5FEB;&#x65B9;&#x5F0F;&#x662F;&#x4EC0;&#x4E48;&#x4E5F;&#x4E0D;&#x505A;<ul>
+<li>&#x95EE;&#x4F60;&#x81EA;&#x5DF1;&#x6CA1;&#x6709;&#x5B83;&#x4F60;&#x662F;&#x5426;&#x80FD;&#x6D3B;</li>
+<li>&#x8D8A;&#x5C11;&#x7684;&#x4EE3;&#x7801;&#x610F;&#x5473;&#x7740;&#x8D8A;&#x5C11;&#x7684;bug</li>
+<li>&#x4E5F;&#x53EF;&#x4EE5;&#x770B;&#x770B;&#x8FD9;&#x4E9B;&#xFF1A;<ul>
+<li><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it" target="_blank" rel="external">You aren&#x2019;t gonna need it (YAGNI)</a></li>
+<li><a href="http://www.startuplessonslearned.com/2008/11/what-is-customer-development.html" target="_blank" rel="external">Customer development</a></li>
+<li><a href="http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html" target="_blank" rel="external">Minimum viable product (MVP)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>&#x5B8C;&#x6210;&#x4EFB;&#x52A1;&#x7B2C;&#x4E8C;&#x5FEB;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x8BA9;&#x5176;&#x4ED6;&#x4EBA;&#x53BB;&#x505A;<ul>
+<li>&#x4F8B;&#x5982;&#xFF0C;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x4F7F;&#x7528;&#x522B;&#x4EBA;&#x4F5C;&#x54C1;&#x83B7;&#x5F97;&#x6210;&#x529F;&#x7684;&#x4F8B;&#x5B50;</li>
+<li>&#x5982;&#x679C;&#x4F60;&#x53EF;&#x4EE5;&#x9003;&#x8131;&#x5B83;&#xFF0C;&#x4F7F;&#x7528;<a href="https://nodejs.org/api/" target="_blank" rel="external">Node.js core API</a></li>
+<li>&#x4F7F;&#x7528;&#x9884;&#x751F;&#x6210;&#x7684;&#x4EE3;&#x7801;&#x5757;&#xFF0C;&#x4F8B;&#x5982;<a href="https://www.npmjs.com/" target="_blank" rel="external">npm packages</a><ul>
+<li>&#x786E;&#x5B9A;&#x4F60;&#x4F7F;&#x7528;&#x4E86;&#x9AD8;&#x8D28;&#x91CF;&#x7684;&#x4F9D;&#x8D56;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="&#x901A;&#x5219;"><a href="#&#x901A;&#x5219;" class="headerlink" title="&#x901A;&#x5219;"></a>&#x901A;&#x5219;</h3><p>&#x672C;&#x8282;&#x8986;&#x76D6;&#x4E86;&#x4E00;&#x822C;&#x95EE;&#x9898;&#xFF0C;&#x65E0;&#x8BBA;&#x4F60;&#x7684;&#x5F00;&#x53D1;&#x7684;&#x76EE;&#x6807;&#x662F;&#x4EC0;&#x4E48;</p>
+<h4 id="&#x5B89;&#x88C5;Node-js"><a href="#&#x5B89;&#x88C5;Node-js" class="headerlink" title="&#x5B89;&#x88C5;Node.js"></a>&#x5B89;&#x88C5;Node.js</h4><h5 id="&#x76EE;&#x6807;"><a href="#&#x76EE;&#x6807;" class="headerlink" title="&#x76EE;&#x6807;"></a>&#x76EE;&#x6807;</h5><p>&#x5B89;&#x88C5; Node.js</p>
+<p>&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x8BA9;&#x4F60;&#x5F00;&#x59CB;&#x7684;&#x5F00;&#x53D1;&#x73AF;&#x5883;(e.g. &#x7F16;&#x8F91;&#x5668;&#xFF0C;git GUIs&#xFF0C;terminals&#xFF0C;FTP clients)&#x5E76;&#x4E14;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x9700;&#x6C42;&#x6539;&#x53D8;&#x3002;</p>
+<h5 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;"><a href="#&#x89E3;&#x51B3;&#x65B9;&#x6848;" class="headerlink" title="&#x89E3;&#x51B3;&#x65B9;&#x6848;"></a>&#x89E3;&#x51B3;&#x65B9;&#x6848;</h5><p>&#x4E0B;&#x8F7D;&#x5E76;&#x5B89;&#x88C5;&#x8FD9;&#x4E9B;&#x5DE5;&#x5177;&#xFF1A;</p>
+<ul>
+<li>&#x7F16;&#x8F91;&#x5668;&#xFF1A;Atom<ul>
+<li><strong>Atom&#x5305;(Atom Packages)/&#x63D2;&#x4EF6;(plug-ins):</strong><ul>
+<li><a href="https://gist.github.com/talkahe/25d1f34d2aec3cf662b29309ec08635d" target="_blank" rel="external">&#x5305;(Package)&#x5B89;&#x88C5;&#x811A;&#x672C;&#x5728;&#x8FD9;&#x91CC;</a></li>
+<li><em>atom-beautify</em> (<code>Ctrl/Cmd+comma</code> -&gt; <code>Packages</code> -&gt; <code>Search for atom-beautify</code> -&gt; <code>Settings</code> -&gt;  <code>toggle the Beautify</code> On Save option for every language you want)</li>
+<li><em>atom-html-preview</em> (press <code>Ctrl/Cmd+p</code> in the editor to open the preview)&#x5728;&#x7F16;&#x8F91;&#x5668;&#x4E2D;&#x6253;&#x5F00;&#x9884;&#x89C8;</li>
+<li><em>fold-lines</em></li>
+<li><em>platformioi-ide-terminal</em> (terminal at bottom of editor) &#x7F16;&#x8F91;&#x5668;&#x5E95;&#x90E8;&#x7684;&#x7EC8;&#x7AEF;</li>
+<li><em>markdown-preview</em> (press <code>Ctrl/Cmd+Shift+M</code> in the editor to open the preview)&#x5728;&#x7F16;&#x8F91;&#x5668;&#x4E2D;&#x6253;&#x5F00;markdown&#x9884;&#x89C8;</li>
+<li><em>linter</em> (A linter is a small program that checks code for stylistic or programming errors.<a href="http://atomlinter.github.io/" target="_blank" rel="external">Available linters</a>) &#x4E00;&#x4E2A;&#x5C0F;&#x7A0B;&#x5E8F;&#x7528;&#x6765;&#x68C0;&#x67E5;&#x4EE3;&#x7801;&#x98CE;&#x683C;&#x6216;&#x8005;&#x8BED;&#x6CD5;&#x9519;&#x8BEF;</li>
+<li><em>linter-jshint</em> (JavaScript linter) JavaScript &#x68C0;&#x67E5;&#x5668;</li>
+<li><em>highlight-selected</em> (Double click on a word to highlight it throughout the open file) &#x5728;&#x6253;&#x5F00;&#x7684;&#x6587;&#x6863;&#x4E2D;&#x53CC;&#x51FB;&#x4E00;&#x4E2A;&#x8BCD;&#x8BED;&#x6765;&#x9AD8;&#x4EAE;&#x5B83;</li>
+<li><em>minimap</em> (broad overview of code) &#x7F16;&#x8F91;&#x5668;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7F29;&#x7565;&#x56FE;</li>
+<li><em>minimap-cursorline</em></li>
+<li><em>atom-typescript</em> (.ts support for atom) &#x4F7F;atom&#x652F;&#x6301;typescript&#x7684;<code>.ts</code>&#x683C;&#x5F0F;&#x6587;&#x4EF6;</li>
+<li><em>autoclose-html</em></li>
+<li><em>double-tag</em> (edit HTML open and close tags simultaneously) &#x540C;&#x65F6;&#x7F16;&#x8F91;HTML&#x7684;&#x6253;&#x5F00;&#x548C;&#x5173;&#x95ED;&#x6807;&#x7B7E;</li>
+<li><em>color-picker</em> (highlight a color, right click, choose color-picker.Can view &amp; edit colors visually)&#x9AD8;&#x4EAE;&#x4E00;&#x4E2A;&#x989C;&#x8272;&#xFF0C;&#x53F3;&#x952E;&#x5355;&#x51FB;&#xFF0C;&#x9009;&#x62E9; <code>color-picker</code>,&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x89C6;&#x89C9;&#x67E5;&#x770B;&#x5E76;&#x7F16;&#x8F91;&#x8FD9;&#x4E2A;&#x989C;&#x8272;</li>
+<li><em>package-sync</em> (save atom packages across computers with a config file) &#x5C06;atom &#x5305;&#x914D;&#x7F6E;&#x4FDD;&#x5B58;&#x4E3A;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</li>
+</ul>
+</li>
+<li><strong>&#x7248;&#x672C;&#x63A7;&#x5236;(Version Control):</strong> <a href="https://git-scm.com/" target="_blank" rel="external">git</a></li>
+<li><strong>&#x4ED3;&#x5E93;(Repository(repo) hosting):</strong> <a href="https://github.com" target="_blank" rel="external">Github</a><ul>
+<li><a href="https://education.github.com/" target="_blank" rel="external">free private repos for students</a></li>
+</ul>
+</li>
+<li>Git GUI: <a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">SourceTree</a></li>
+<li>API testing: <a href="https://www.getpostman.com/apps" target="_blank" rel="external">Postman</a></li>
+<li>Socket testing: <a href="https://chrome.google.com/webstore/detail/socketio-tester/cgmimdpepcncnjgclhnhghdooepibakm?hl=en" target="_blank" rel="external">Socket.io tester</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;"><a href="#&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;" class="headerlink" title="&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;"></a>&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;</h4><h5 id="&#x76EE;&#x6807;-1"><a href="#&#x76EE;&#x6807;-1" class="headerlink" title="&#x76EE;&#x6807;"></a>&#x76EE;&#x6807;</h5><p>&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x5168;&#x65B0;&#x7684;&#x9879;&#x76EE;</p>
+<h5 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;-1"><a href="#&#x89E3;&#x51B3;&#x65B9;&#x6848;-1" class="headerlink" title="&#x89E3;&#x51B3;&#x65B9;&#x6848;"></a>&#x89E3;&#x51B3;&#x65B9;&#x6848;</h5><ol>
+<li>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x4ED3;&#x5E93;&#x5728;Github&#x4E0A;<ul>
+<li>&#x5F53;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x4ED3;&#x5E93;&#x65F6;&#x5728;<code>gitignore</code>&#x8BBE;&#x7F6E;&#x4E0B;&#x9009;&#x62E9;Node</li>
+<li>&#x9009;&#x62E9;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; <code>README.md</code> &#x6587;&#x4EF6;</li>
+</ul>
+</li>
+<li>&#x4F7F;&#x7528;<code>&#x7EC8;&#x7AEF;&#x547D;&#x4EE4;&#x884C;(terminal)</code>&#x6216;&#x8005;<code>SourceTree</code>&#x514B;&#x9686;(Clone)&#x5B83;&#x5230;&#x4F60;&#x7684;&#x8BA1;&#x7B97;&#x673A;</li>
+<li>&#x5EFA;&#x7ACB;&#x4F60;&#x7684;&#x6587;&#x4EF6;&#x548C;&#x6587;&#x4EF6;&#x5939;&#x7ED3;&#x6784;</li>
+<li>&#x5728;&#x4F60;&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x6253;&#x5F00;&#x7EC8;&#x7AEF;&#x7A97;&#x53E3;(&#x6216;&#x8005;&#x5F53;&#x4F60;&#x5728;SourceTree&#x4E2D;&#x6253;&#x5F00;&#x4ED3;&#x5E93;&#x65F6;&#x4F7F;&#x7528;Terminal&#x6309;&#x94AE;)</li>
+<li>&#x5728;&#x4F60;&#x7684;&#x7EC8;&#x7AEF;(terminal)&#x4E2D;&#x8FD0;&#x884C;<code>npm init</code>&#x6765;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<code>package.json</code>&#x6587;&#x4EF6;<ul>
+<li>&#x8BBE;&#x7F6E;&#x4F60;&#x7684;&#x521D;&#x59CB;&#x5316;&#x7248;&#x672C;&#x4E3A;<code>0.1.0</code> &#xFF08;&#x53C2;&#x89C1;&#x2018;&#x7248;&#x672C;&#x7F16;&#x53F7;&#x2019;&#xFF09;</li>
+<li>&#x5F53;&#x7CFB;&#x7EDF;&#x63D0;&#x793A;&#x8F93;&#x5165;&#x8BB8;&#x53EF;&#x8BC1;&#x540D;&#x79F0;&#x65F6;&#xFF0C;&#x901A;&#x8FC7;&#x8F93;&#x5165;<code>MIT</code>&#x4E3A;&#x5F00;&#x6E90;&#x9879;&#x76EE;&#x9009;&#x62E9;&#x4E00;&#x4E2A;<code>MIT license</code></li>
+</ul>
+</li>
+<li>&#x8FD0;&#x884C;<code>atom</code>&#x3002;&#x5728;&#x4F60;&#x7684;&#x7EC8;&#x7AEF;&#x4E2D;(terminal)&#x52A0;&#x8F7D;&#x4F60;&#x7684;&#x9879;&#x76EE;&#x6587;&#x4EF6;&#x5939;</li>
+</ol>
+<h4 id="&#x6587;&#x4EF6;&#x548C;&#x6587;&#x4EF6;&#x5939;&#x7ED3;&#x6784;"><a href="#&#x6587;&#x4EF6;&#x548C;&#x6587;&#x4EF6;&#x5939;&#x7ED3;&#x6784;" class="headerlink" title="&#x6587;&#x4EF6;&#x548C;&#x6587;&#x4EF6;&#x5939;&#x7ED3;&#x6784;"></a>&#x6587;&#x4EF6;&#x548C;&#x6587;&#x4EF6;&#x5939;&#x7ED3;&#x6784;</h4><p>(&#x672A;&#x5B8C;&#x5F85;&#x7EED;&#x2026;)</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/翻译/" rel="tag">#翻译</a>
+          
+            <a href="/tags/Node-js/" rel="tag">#Node.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/17/修改hosts实现科学上网/" rel="next" title="修改hosts实现科学上网">
+                <i class="fa fa-chevron-left"></i> 修改hosts实现科学上网
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/19/译-Node-js-Playbook/"
+           data-title="译: Node.js Playbook" data-url="http://yoursite.com/2016/09/19/译-Node-js-Playbook/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/ArthurFree.png"
+               alt="ArthurFree" />
+          <p class="site-author-name" itemprop="name">ArthurFree</p>
+          <p class="site-description motion-element" itemprop="description">安安静静写代码......</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#node-playbook-译"><span class="nav-number">1.</span> <span class="nav-text">node-playbook(译)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js-Playbook"><span class="nav-number">1.1.</span> <span class="nav-text">Node.js Playbook</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#面向人群"><span class="nav-number">1.1.1.</span> <span class="nav-text">面向人群</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用"><span class="nav-number">1.2.</span> <span class="nav-text">如何使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黄金法则：尽可能避免coding"><span class="nav-number">1.3.</span> <span class="nav-text">黄金法则：尽可能避免coding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通则"><span class="nav-number">1.4.</span> <span class="nav-text">通则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Node-js"><span class="nav-number">1.4.1.</span> <span class="nav-text">安装Node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方案"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工作流程"><span class="nav-number">1.4.2.</span> <span class="nav-text">工作流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-1"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方案-1"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件和文件夹结构"><span class="nav-number">1.4.3.</span> <span class="nav-text">文件和文件夹结构</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ArthurFree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"arthurfree"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
