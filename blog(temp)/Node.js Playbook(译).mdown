@@ -9,23 +9,23 @@ Node.js PlayBook 是一个使用Node.js来开发的“起手”指南。
 
 它将在两方面来帮助你：
 
-- 解决问题：如果你有特需要，它可以给你一个对大部分人起作用的解决方案。
-- 发现新的想法： 如果你只是浏览，你将了解可以帮助到你的项目的新东西。
+-	解决问题：如果你有特需要，它可以给你一个对大部分人起作用的解决方案。
+-	发现新的想法： 如果你只是浏览，你将了解可以帮助到你的项目的新东西。
 
 #### 面向人群
 
-- 那些只是想避免很多麻烦来开始一个项目的*初学者*
-- 那些想要一个“起手”来指导Node.js系统不熟悉的地方的*有一定经验的程序员*
+-	那些只是想避免很多麻烦来开始一个项目的*初学者*
+-	那些想要一个“起手”来指导Node.js系统不熟悉的地方的*有一定经验的程序员*
 
 ### 如何使用
 
 这只是一个学习工具，并且你必须明白它的限制。
-- 阅读官方文档和教程来实现任何解决方案。此篇文章并不能代替它们。
-- 此篇文章不会教授如何编程
-- 此篇文章不会教授 JavaScript
-- 此篇文章不是使用Node.js开发的唯一方式。使用这篇文章来开始，并且保持学习关于其他使用Node.js解决问题的方式
-- 此篇文章不是使用Node.js开发最好的方式。它只是一种减少大量学习开销，从而足够使你起手的方式。一旦你的项目变得复杂，你需要寻找一种更好的解决方案来符合你的需要。
-- 并非所有建议是专门针对Node.js的
+-	阅读官方文档和教程来实现任何解决方案。此篇文章并不能代替它们。
+-	此篇文章不会教授如何编程
+-	此篇文章不会教授 JavaScript
+-	此篇文章不是使用Node.js开发的唯一方式。使用这篇文章来开始，并且保持学习关于其他使用Node.js解决问题的方式
+-	此篇文章不是使用Node.js开发最好的方式。它只是一种减少大量学习开销，从而足够使你起手的方式。一旦你的项目变得复杂，你需要寻找一种更好的解决方案来符合你的需要。
+-	并非所有建议是专门针对Node.js的
 
 不要把这篇文章当作你唯一的学习资源。此篇文章只能给你最广泛适用的解决方案。随着你的成长，你应该去探索其他的解决方案。这不是Node.js开发的全部和最终所有。它只是你学习经验和探索的一部分，而不是全部。
 
@@ -33,18 +33,75 @@ Node.js PlayBook 是一个使用Node.js来开发的“起手”指南。
 
 做最佳懒惰。这里只有两个原则：
 1. 完成任务的最快方式是什么也不做
-	- 问你自己没有它你是否能活
-	- 越少的代码意味着越少的bug
-	- 也可以看看这些：
-		- [You aren't gonna need it (YAGNI)](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it)
-		- [Customer development](http://www.startuplessonslearned.com/2008/11/what-is-customer-development.html)
-		- [Minimum viable product (MVP)](http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html)
+	-	问你自己没有它你是否能活
+	-	越少的代码意味着越少的bug
+	-	也可以看看这些：
+		-	[You aren't gonna need it (YAGNI)](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it)
+		-	[Customer development](http://www.startuplessonslearned.com/2008/11/what-is-customer-development.html)
+		-	[Minimum viable product (MVP)](http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html)
 2. 完成任务第二快的方式是让其他人去做
-	- 例如，这篇文章就是一个使用别人作品获得成功的例子
-	- 如果你可以逃脱它，使用[Node.js core API](https://nodejs.org/api/)
-	- 使用预生成的代码块，例如[npm packages](https://www.npmjs.com/)
+	-	例如，这篇文章就是一个使用别人作品获得成功的例子
+	-	如果你可以逃脱它，使用[Node.js core API](https://nodejs.org/api/)
+	-	使用预生成的代码块，例如[npm packages](https://www.npmjs.com/)
 		- 确定你使用了高质量的依赖
 
 ### 通则
 
-本节覆盖了无论你的开发目标是什么
+本节覆盖了一般问题，无论你的开发的目标是什么
+
+#### 安装Node.js
+
+##### 目标
+
+安装 Node.js
+
+建立一个让你开始的开发环境(e.g. 编辑器，git GUIs，terminals，FTP clients)并且可以根据需求改变。
+
+##### 解决方案
+
+下载并安装这些工具：
+-	编辑器：Atom
+	-	**Atom包(Atom Packages)/插件(plug-ins):**
+		-	[包(Package)安装脚本在这里](https://gist.github.com/talkahe/25d1f34d2aec3cf662b29309ec08635d)
+		-	*atom-beautify* (`Ctrl/Cmd+comma` -> `Packages` -> `Search for atom-beautify` -> `Settings` ->  `toggle the Beautify` On Save option for every language you want)
+		-	*atom-html-preview* (press `Ctrl/Cmd+p` in the editor to open the preview)在编辑器中打开预览
+		-	*fold-lines*
+		-	*platformioi-ide-terminal* (terminal at bottom of editor) 编辑器底部的终端
+		-	*markdown-preview* (press `Ctrl/Cmd+Shift+M` in the editor to open the preview)在编辑器中打开markdown预览
+		-	*linter* (A linter is a small program that checks code for stylistic or programming errors.[Available linters](http://atomlinter.github.io/)) 一个小程序用来检查代码风格或者语法错误
+		-	*linter-jshint* (JavaScript linter) JavaScript 检查器
+		-	*highlight-selected* (Double click on a word to highlight it throughout the open file) 在打开的文档中双击一个词语来高亮它
+		-	*minimap* (broad overview of code) 编辑器代码文件缩略图
+		-	*minimap-cursorline*
+		-	*atom-typescript* (.ts support for atom) 使atom支持typescript的`.ts`格式文件
+		-	*autoclose-html*
+		-	*double-tag* (edit HTML open and close tags simultaneously) 同时编辑HTML的打开和关闭标签
+		-	*color-picker* (highlight a color, right click, choose color-picker.Can view & edit colors visually)高亮一个颜色，右键单击，选择 `color-picker`,可以通过视觉查看并编辑这个颜色
+		-	*package-sync* (save atom packages across computers with a config file) 将atom 包配置保存为一个配置文件
+	-	**版本控制(Version Control):** [git](https://git-scm.com/)
+	-	**仓库(Repository(repo) hosting):** [Github](https://github.com)
+		-	[free private repos for students](https://education.github.com/)
+	-	Git GUI: [SourceTree](https://www.sourcetreeapp.com/)
+	-	API testing: [Postman](https://www.getpostman.com/apps)
+	-	Socket testing: [Socket.io tester](https://chrome.google.com/webstore/detail/socketio-tester/cgmimdpepcncnjgclhnhghdooepibakm?hl=en)
+
+#### 工作流程
+
+##### 目标
+
+建立一个全新的项目
+
+##### 解决方案
+
+1. 创建一个新的仓库在Github上
+	-	当创建一个仓库时在`gitignore`设置下选择Node
+	-	选择创建一个 `README.md` 文件
+2. 使用`终端命令行(terminal)`或者`SourceTree`克隆(Clone)它到你的计算机
+3. 建立你的文件和文件夹结构
+4. 在你当前文件夹下打开终端窗口(或者当你在SourceTree中打开仓库时使用Terminal按钮)
+5. 在你的终端(terminal)中运行`npm init`来创建一个`package.json`文件
+	-	设置你的初始化版本为`0.1.0` （参见‘版本编号’）
+	-	当系统提示输入许可证名称时，通过输入`MIT`为开源项目选择一个`MIT license`
+6. 运行`atom`。在你的终端中(terminal)加载你的项目文件夹
+
+#### 文件和文件夹结构
