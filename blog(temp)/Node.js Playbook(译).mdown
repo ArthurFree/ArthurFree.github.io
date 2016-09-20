@@ -1,3 +1,11 @@
+---
+title: '译: Node.js Playbook'
+date: 2016-09-19 23:09:32
+tags: 
+- 翻译
+- Node.js
+---
+
 ## node-playbook(译)
 
 > 地址: 
@@ -6,7 +14,7 @@
 ### Node.js Playbook
 
 Node.js PlayBook 是一个使用Node.js来开发的“起手”指南。
-
+<!-- more -->
 它将在两方面来帮助你：
 
 -	解决问题：如果你有特需要，它可以给你一个对大部分人起作用的解决方案。
@@ -105,3 +113,57 @@ Node.js PlayBook 是一个使用Node.js来开发的“起手”指南。
 6. 运行`atom`。在你的终端中(terminal)加载你的项目文件夹
 
 #### 文件和文件夹结构
+
+##### 目标
+
+建立一个文件和文件夹结构来使你之后增加更多的复杂性，例如构建和测试系统
+
+##### 解决方案
+
+1. 创建两个子文件夹
+	1. *src*: 将你所有的源代码放到这里
+	2. *test*: 将你所有的测试代码放在这里
+2. 在*src*文件夹中创建一个文件命名为*index.js*
+
+#### 代码风格
+
+##### 目标
+
+制定一个可以让你在分享代码你的代码时不会造成困扰的代码风格
+
+一段糟糕的代码风格反应了糟糕的你
+
+##### 解决方案
+
+可以试试Airbnb的代码风格(Airbnb's Javascript Style Guide)[https://github.com/airbnb/javascript]
+
+#### 本机模块和Windows
+
+##### 目标
+
+当你尝试安装一个npm包时，修复与`node-gyp`相关的错误
+
+npm尝试在你的计算机中构建这个包发生的问题是由于非javaScript代码造成的。除非你已经安装了构建环境，不然会报错。
+
+##### 推荐解决方案
+
+寻找另一个使用纯JavaScript的npm包来完成这项工作。例如，[bcryptjs](https://www.npmjs.com/package/bcryptjs)是流行的[bcrypt](https://www.npmjs.com/package/bcrypt)模块的简易替换
+
+如何找到替代品:
+-	如果仓库托管在Github上或者一个类似的平台上，搜索任何人提的关于`Windows`或者`node-gyp`的问题（issues）。可能已经有人放上了用纯JavaScript替代品的链接。
+-	在线搜索
+
+确定你选择的替代方案是一个合适的替代者。寻找：
+-	最近活跃的贡献者
+-	友好的文档
+-	下载次数
+
+这是最简单的解决方案，因为它笑除了该问题，而不是迁就它。从本地模块获得的速度优势将不会失去，直到你的开发周期结束。
+
+##### 可选择的解决方案
+
+当且仅当你不能找到一个合适的替代npm包时在做。
+按照[node-gyp README](https://github.com/nodejs/node-gyp#Installation)上的windows安装说明做。
+
+
+(未完待续...)
