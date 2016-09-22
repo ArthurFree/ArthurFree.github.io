@@ -165,5 +165,109 @@ npm尝试在你的计算机中构建这个包发生的问题是由于非javaScri
 当且仅当你不能找到一个合适的替代npm包时在做。
 按照[node-gyp README](https://github.com/nodejs/node-gyp#Installation)上的windows安装说明做。
 
+### Web
+
+如果你正在尝试建立一个web应用看这里。
+
+#### 技术栈(Technology stack)
+
+##### 目标
+
+选择一个技术栈(例如，服务端框架，数据库，前端框架，主机平台(hosting platform))
+
+##### 解决方案
+
+-	后端:
+	-	主机(Hosting): [Heroku](https://www.heroku.com/)(选择"free dyno"选项)
+	-	服务端框架: [express](https://www.npmjs.com/package/express)
+	-	Sockets: [sockit.io](https://www.npmjs.com/package/socket.io)
+	-	数据库(Database): PostgreSQL(在使用免费的Heroku上部署它)
+	-	对象关系映射: [Sequelize](https://www.npmjs.com/package/sequelize)
+-	前端:
+	-	域名(Domain): [Namecheap](https://www.namecheap.com/domains/registration.aspx)
+	-	主机(Hosting): [CloudFlare](https://www.cloudflare.com/)
+	-	Javascript: [React](https://facebook.github.io/react/)
+		-	使用[react-slingshot](https://github.com/coryhouse/react-slingshot)作为模板。建立一个项目的结构，一个示例应用，并使用[Redux](https://github.com/reactjs/redux)作为状态管理系统。
+	-	样式: [Bootstrap](http://getbootstrap.com/)
+
+### 移动端(Mobile)
+
+这一节覆盖了一些常遇的问题:
+
+-	使用JavaScript开发与部署本地移动端应用
+-	用web应用服务移动端用户
+
+我正在寻找这一节的贡献者
+
+### 桌面(Desktop)
+
+这一节覆盖了一些在开发与部署桌面应用时的一些常规问题。
+
+我正在寻找这一节的贡献者
+
+#### 多系统平台框架
+
+##### 目标
+
+打包并运行你的Node.js应用在任何操作系统作为桌面应用运行。
+
+##### 解决方案
+
+使用[Electron](http://electron.atom.io/)。它现在第一个稳定的版本子啊2016年5月11日发布。它受到Github和Atom的支持,并且有一个活跃的社区。Electron应用可以在Mac,Windows和Linux上安装并运行。
+
+### Packages
+
+这一节主要覆盖了在开发与发布可复用的包时遇到的一些问题。
+
+#### 版本编号
+
+##### 目标
+
+更新版本号来告诉使用它的用户它有了很大的改变
+
+##### 解决方案
+
+使用[Semantic Versioning](http://semver.org/)(a.k.a semver).
+
+-	增加你的patch(0.0.x)版本使用`npm version patch`
+-	增加你的minor(0.x.0)版本使用`npm version minor`
+-	增加你的major(0.x.0)版本使用`npm version major`
+
+使用命令`npm version`将自动将`package.json`的版本号更新，并且你可以使用`npm push --tags`来为你创建一个git tag
+
+这里是关于semver最重要的几点:
+> 给定一个版本号 MAJOR.MINOR.PATCH, 增加：
+> -	MAJOR 版本 当你使API做出改变而不兼容时
+> -	MINOR 版本 当你添加了一个功能来向后兼容时
+> -	Patch 版本 当你修复向后兼容的bug时
+> 我应该如何处理版本在0.y.z的初始开发阶段？
+> 
+> 最简单的是开始你的初始开发版本到 0.1.0 然后对每一个版本增加 minor
+> 
+> 我怎么知道什么是是1.0.0版本呢？
+> 
+> 如果捏到软件正在用于产品中，它应该可以是1.0.0。如果你非常担心向后兼容性，你应该就可以到 1.0.0了。
+
+#### 即将到来的章节
+
+我们非常愿意你来帮助将Playbook变得更加有用。这里有一些章节我们非常愿意收到pull request: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (未完待续...)
