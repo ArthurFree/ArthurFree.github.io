@@ -1,0 +1,284 @@
+# webpack学习(一)
+
+## 开始
+
+### 安装
+
+首先为项目创建一个文件夹，然后输入
+
+```
+$ npm init
+```
+通过输入一系列相关问题，创建一个`package.json`文件，接下来运行输入
+
+```
+$ npm install webpack --save-dev
+```
+把webpack当作依赖保存下来
+
+这里需要注意所在文件夹名字不能为webpack否则会报错
+
+### 项目目录结构
+
+-	/app
+	-	main.js
+	-	component.js
+-	/build
+	-	bundle.js (自动创建)
+	-	index.html
+-	package.json
+-	webpack.config.js
+
+我们使用webpack的打包命令在我们的`/app`里自动创建`bundle.js`
+
+### 设置webpack
+
+**webpack.config.js**
+
+```
+
+var path = require('path');
+
+module.exports = {
+	entry: path.resolve(__dirname, 'app/main.js'),
+	output: {
+		path: path.resolve(__dirname, 'build'),
+		filename: 'bundle.js',
+	},
+};
+
+```
+
+### 运行编译
+
+现在已经有了配置，我们接着添加需要去编译的文件，首先来完成一个`hello world`
+
+**app/component.js**
+
+```
+
+'use strict';
+
+module.exports = function () {
+	var element = document.createElement('h1');
+
+	element.innerHTML = 'Hello World';
+
+	return element;
+}
+
+```
+
+**app/main.js**
+
+```
+
+'use strict'
+
+var component = require('./component.js');
+
+document.body.appendChild(component());
+
+```
+
+在项目文件夹下，运行
+```
+$ webpack
+```
+在`/build`文件夹下会生成一个`bundle.js`文件
+
+此时打开`/build`文件夹下的`index.html`就可以看到输出的**Hello World**了
+
+### 设置package.json script
+
+使用命令将webpack添加进依赖
+
+```
+$ npm install webpack --save
+```
+这里的配置和之前不同，这里是`--save`,而之前我们配置的是`--save-dev`，这里一个是将webpack添加进项目的依赖中，一个是添加进了开发依赖中，我们可以从`package.json`中看出区别
+
+**package.json**
+
+```
+
+{
+  "name": "learn-webpack-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ArthurFree",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^1.13.2"
+  },
+  "dependencies": {
+    "webpack": "^1.13.2"
+  }
+}
+
+```
+
+从这里我们就可以看出了`package.json`文件中两个配置分别对应了两个字段。当开发结束后，我们不再需要此依赖时，就可以将其添加进开发依赖(devDependencies)中。
+
+接下来，我们将编译步骤放到这条指令中：
+```
+$ npm run build
+```
+
+我们在`package.json`文件中添加以下内容
+
+```
+"scripts": {
+    "build": "webpack"
+}
+```
+这样就可以使用上面的命令进行编译了。
+
+当项目越来越复杂时，我们就可以通过这种将复杂的操作隐藏在`scripts`里面的方式来简化操作。
+
+npm会找到webpack，`npm run`会把它临时加到`PATH`来让我们这条指令工作
+
+
+### 设置`webpack-dev-server`
+
+在项目中，频繁的输入`npm run build`命令，也显得非常玛法，所以通过`webpack-dev-server`可以让其一直运行着
+
+首先，我们来安装它
+
+```
+$ npm i webpack-dev-server --save
+```
+
+安装完成后，我们需要调整一下`package.json`文件中的`scripts`部分
+
+```
+
+{
+	"scripts": {
+		"build": "webpack",
+		"dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build"
+	}
+}
+
+```
+然后在命令行中运行`npm run dev`时，会执行dev属性中的值
+
+其中指令配置说明:
+1. `webpack-dev-server`: 在本机建立一个**localhost:8080**服务器
+2. `--devtool eval`: 为你的代码创建源地址。当有任何报错的时候可以让你更加精确地定位到文件和行号
+3. `--progress`: 显示合并代码进度
+4. `--colors`: 命令行中显示颜色
+5. `--content-base build`: 指向设置的输出目录
+
+当你运行`npm run dev`时，会启动一个服务器，然后监听文件修改，然后自动重新合并代码。
+在浏览器中访问[http://localhost:8080](http://localhost:8080),就可以看到效果了。
+
+不过这里还有些不足，当我们修改完文件保存后，需要手动的在浏览器中刷新，才能看到最新的结果。
+所以我们需要增加一个脚本当发生改变时去自动刷新应用，我们在`webpack.config.js`文件的配置中增加一个入口点。
+
+```
+
+var path = require('path');
+
+module.exports = {
+	ertry: [
+		'webpack/hot/dev-server',
+		'webpack-dev-server/client?http://localhost:8080',
+		path.resolve(__dirname, 'app/main.js')
+	],
+	output: {
+		path: path.resolve(__dirname, 'build'),
+		filename: 'bundle.js'
+	},
+};
+
+```
+至此，我们已经完成了一个
+
+### 模块
+
+webpack允许使用不同的模块类型，但是'底层'必须使用同一种实现。
+
+#### ES6模块
+
+```
+
+import MyModule form './MyModule.js';
+
+```
+
+#### CommonJS
+
+```
+
+var MyMoudle = require('./MyModule.js');
+
+```
+
+#### AMD
+
+```
+
+define(['./MyModule.js'], function (MyModue) {
+	
+});
+
+```
+
+### 文件路径
+
+一个模块会按照它的文件路径来加载，我们在`/app`文件夹下继续创建项目结构
+
+-	/app
+	-	/modules
+		-	MyModule.js
+	-	main.js
+	-	utils.js
+
+在`app/main.js`中引入`app/modules/Module.js`
+
+```
+
+// ES6
+import MyModule from './modules/MyModule.js'
+
+// CommonJS
+var MyModule = require('./modules/MyModule.js')
+
+```
+
+这里`./`指相对当前文件路径
+
+然后我们在`MyModule.js`下引入`app/utils`
+
+```
+
+// ES6 相对路径
+import utils from './../utils.js'
+
+// ES6 相对路径
+import utils from '/utils.js'
+
+// CommonJS 相对路径
+var utils = require('./../utils.js');
+
+// CommonJS 绝对路径
+var utils = require('/utils');
+
+```
+
+**相对路径**是相对当前目录
+**绝对路径**是相对入口文件，这里是`main.js`
+
+## 总结
+
+本文主要是简单配置了webpack开发环境，实现了实际开发中的简单的模块加载以及实时刷新功能。其在开发环境中还有更多的功能可以去使用，所以接下来将继续学习使用webpack，并运用到React中。
+
+## 参考
+
+> webpack和React小书：
+> [https://fakefish.github.io/react-webpack-cookbook/Getting-started.html](https://fakefish.github.io/react-webpack-cookbook/Getting-started.html)
