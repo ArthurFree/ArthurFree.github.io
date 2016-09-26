@@ -36,7 +36,6 @@ $ npm install webpack --save-dev
 **webpack.config.js**
 
 ```
-
 var path = require('path');
 
 module.exports = {
@@ -46,7 +45,6 @@ module.exports = {
 		filename: 'bundle.js',
 	},
 };
-
 ```
 
 ### 运行编译
@@ -56,7 +54,6 @@ module.exports = {
 **app/component.js**
 
 ```
-
 'use strict';
 
 module.exports = function () {
@@ -66,19 +63,15 @@ module.exports = function () {
 
 	return element;
 }
-
 ```
 
 **app/main.js**
-
 ```
-
 'use strict'
 
 var component = require('./component.js');
 
 document.body.appendChild(component());
-
 ```
 
 在项目文件夹下，运行
@@ -101,7 +94,6 @@ $ npm install webpack --save
 **package.json**
 
 ```
-
 {
   "name": "learn-webpack-react",
   "version": "1.0.0",
@@ -119,7 +111,6 @@ $ npm install webpack --save
     "webpack": "^1.13.2"
   }
 }
-
 ```
 
 从这里我们就可以看出了`package.json`文件中两个配置分别对应了两个字段。当开发结束后，我们不再需要此依赖时，就可以将其添加进开发依赖(devDependencies)中。
@@ -156,14 +147,12 @@ $ npm i webpack-dev-server --save
 安装完成后，我们需要调整一下`package.json`文件中的`scripts`部分
 
 ```
-
 {
 	"scripts": {
 		"build": "webpack",
 		"dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build"
 	}
 }
-
 ```
 然后在命令行中运行`npm run dev`时，会执行dev属性中的值
 
@@ -181,7 +170,6 @@ $ npm i webpack-dev-server --save
 所以我们需要增加一个脚本当发生改变时去自动刷新应用，我们在`webpack.config.js`文件的配置中增加一个入口点。
 
 ```
-
 var path = require('path');
 
 module.exports = {
@@ -195,7 +183,6 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 };
-
 ```
 至此，我们已经完成了一个
 
@@ -206,27 +193,21 @@ webpack允许使用不同的模块类型，但是'底层'必须使用同一种�
 #### ES6模块
 
 ```
-
 import MyModule form './MyModule.js';
-
 ```
 
 #### CommonJS
 
 ```
-
 var MyMoudle = require('./MyModule.js');
-
 ```
 
 #### AMD
 
 ```
-
 define(['./MyModule.js'], function (MyModue) {
 	
 });
-
 ```
 
 ### 文件路径
@@ -242,13 +223,11 @@ define(['./MyModule.js'], function (MyModue) {
 在`app/main.js`中引入`app/modules/Module.js`
 
 ```
-
 // ES6
 import MyModule from './modules/MyModule.js'
 
 // CommonJS
 var MyModule = require('./modules/MyModule.js')
-
 ```
 
 这里`./`指相对当前文件路径
@@ -256,7 +235,6 @@ var MyModule = require('./modules/MyModule.js')
 然后我们在`MyModule.js`下引入`app/utils`
 
 ```
-
 // ES6 相对路径
 import utils from './../utils.js'
 
@@ -268,7 +246,6 @@ var utils = require('./../utils.js');
 
 // CommonJS 绝对路径
 var utils = require('/utils');
-
 ```
 
 **相对路径**是相对当前目录
