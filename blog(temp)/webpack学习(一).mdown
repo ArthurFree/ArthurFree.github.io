@@ -47,6 +47,84 @@ module.exports = {
 };
 ```
 
+webpack配置文件*属性*说明：
+-	**entry**: 配置打包文件的入口，可多个入口文件
+-	**resolve**: 配置文件后缀名
+例如：
+```
+resolve: {
+	extensions: ['.js', '.jsx'],
+	alias: {
+		'react': path.join(nodeModulesPath, 'react/react.js')
+	}
+}
+```
+配置文件后缀名(extensions)后，加载模块文件可以省略后缀名。
+例如：
+```
+// 配置前引用模块
+var component =  require('./component.js');
+
+// 配置后引用模块
+var component = require('./component');
+```
+
+配置项(alias)可以为常用模块配置改属性，可以节省编译搜索的时间
+
+
+-	**output**: 配置输出文件的路径和文件名等
+-	**module(loader)**: 加载相应模块所需要的加载器
+loader配置项：
+	-	`test: /\.(js|jsx)$/`, 使用正则表达式，匹配要处理的文件
+	-	`loader: 'eslint-loader`, 加载要使用*loader*,*-loader*可以省略
+	-	`include: [path.resolve(__dirname, "src/app")]`, 把要处理的目录包括进来
+	-	`exclued: [nodeModulesPath]`, 排除不处理的目录
+目前已有的loader列表: 
+[https://webpack.github.io/docs/list-of-loaders.html](https://webpack.github.io/docs/list-of-loaders.html)
+
+示例：
+```
+module: {
+	preloaders: [
+		{
+			test: /\.(js|jsx)$/,
+			loader: 'eslint-loader',
+			include: [path.resolve(__dirname, "src/app")],
+			exclude: [nodeModulesPath]
+		}
+	],
+	loaders: [
+		{
+			test: /\.(js|jsx)$/,    // 正则表达式匹配 .js 和 .jsx 文件
+			loader: 'babel-loader?optional=runtime&stage=0',  //对匹配的文件进行处理的loader,`?`后面是加载器所带的参数
+			exclued: [nodeModulesPath]     // 排除node module中的文件
+		}
+	]
+}
+```
+-	**plugins**: 配置要使用的插件。plugin是比loader功能更强大的插件，能使用更多的wepack api。
+示例：
+```
+plugins: [
+	// 压缩打包的文件
+	new webpack.optimize.UglifyJsPlugin({
+		compress: {
+			warnings: false
+		}
+	}),
+	// 允许错误不打断程序
+	new webpack.NoErrorsPlugin(),
+	// 把指定文件夹下的文件复制到指定的目录
+	new TransferWebpackPlugin([
+		{form: 'www'}
+	], path.resolve(__dirname, "src"))
+]
+```
+
+目前已有的plugins列表： 
+[http://webpack.github.io/docs/list-of-plugins.html](http://webpack.github.io/docs/list-of-plugins.html)
+
+
 ### 运行编译
 
 现在已经有了配置，我们接着添加需要去编译的文件，首先来完成一个`hello world`
@@ -259,3 +337,5 @@ var utils = require('/utils');
 
 > webpack和React小书：
 > [https://fakefish.github.io/react-webpack-cookbook/Getting-started.html](https://fakefish.github.io/react-webpack-cookbook/Getting-started.html)
+> WebPack 常用功能介绍:
+> [https://segmentfault.com/a/1190000004172052](https://segmentfault.com/a/1190000004172052)
