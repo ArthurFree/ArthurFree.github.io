@@ -1,0 +1,728 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端工具," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/ArthurFree.png?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="webpack&amp;#x5B66;&amp;#x4E60;(&amp;#x4E00;)&amp;#x5F00;&amp;#x59CB;&amp;#x5B89;&amp;#x88C5;&amp;#x9996;&amp;#x5148;&amp;#x4E3A;&amp;#x9879;&amp;#x76EE;&amp;#x521B;&amp;#x5EFA;&amp;#x4E00;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x5939;&amp;#xFF0C;&amp;#x7136;&amp;#x540E;&amp;#x8F93;&amp;#x5165">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack学习(一)">
+<meta property="og:url" content="http://yoursite.com/2016/09/26/webpack学习-一/index.html">
+<meta property="og:site_name" content="ArthurFree's BLOG">
+<meta property="og:description" content="webpack&amp;#x5B66;&amp;#x4E60;(&amp;#x4E00;)&amp;#x5F00;&amp;#x59CB;&amp;#x5B89;&amp;#x88C5;&amp;#x9996;&amp;#x5148;&amp;#x4E3A;&amp;#x9879;&amp;#x76EE;&amp;#x521B;&amp;#x5EFA;&amp;#x4E00;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x5939;&amp;#xFF0C;&amp;#x7136;&amp;#x540E;&amp;#x8F93;&amp;#x5165">
+<meta property="og:updated_time" content="2016-09-26T13:18:55.583Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack学习(一)">
+<meta name="twitter:description" content="webpack&amp;#x5B66;&amp;#x4E60;(&amp;#x4E00;)&amp;#x5F00;&amp;#x59CB;&amp;#x5B89;&amp;#x88C5;&amp;#x9996;&amp;#x5148;&amp;#x4E3A;&amp;#x9879;&amp;#x76EE;&amp;#x521B;&amp;#x5EFA;&amp;#x4E00;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x5939;&amp;#xFF0C;&amp;#x7136;&amp;#x540E;&amp;#x8F93;&amp;#x5165">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/26/webpack学习-一/"/>
+
+  <title> webpack学习(一) | ArthurFree's BLOG </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-81613167-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ArthurFree's BLOG</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                webpack学习(一)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-26T21:15:06+08:00" content="2016-09-26">
+              2016-09-26
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/26/webpack学习-一/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/26/webpack学习-一/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="webpack&#x5B66;&#x4E60;-&#x4E00;"><a href="#webpack&#x5B66;&#x4E60;-&#x4E00;" class="headerlink" title="webpack&#x5B66;&#x4E60;(&#x4E00;)"></a>webpack&#x5B66;&#x4E60;(&#x4E00;)</h1><h2 id="&#x5F00;&#x59CB;"><a href="#&#x5F00;&#x59CB;" class="headerlink" title="&#x5F00;&#x59CB;"></a>&#x5F00;&#x59CB;</h2><h3 id="&#x5B89;&#x88C5;"><a href="#&#x5B89;&#x88C5;" class="headerlink" title="&#x5B89;&#x88C5;"></a>&#x5B89;&#x88C5;</h3><p>&#x9996;&#x5148;&#x4E3A;&#x9879;&#x76EE;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x7136;&#x540E;&#x8F93;&#x5165;<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm init</span><br></pre></td></tr></table></figure></p>
+<p>&#x901A;&#x8FC7;&#x8F93;&#x5165;&#x4E00;&#x7CFB;&#x5217;&#x76F8;&#x5173;&#x95EE;&#x9898;&#xFF0C;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<code>package.json</code>&#x6587;&#x4EF6;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x8FD0;&#x884C;&#x8F93;&#x5165;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install webpack --save-dev</span><br></pre></td></tr></table></figure>
+<p>&#x628A;webpack&#x5F53;&#x4F5C;&#x4F9D;&#x8D56;&#x4FDD;&#x5B58;&#x4E0B;&#x6765;</p>
+<p>&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x6240;&#x5728;&#x6587;&#x4EF6;&#x5939;&#x540D;&#x5B57;&#x4E0D;&#x80FD;&#x4E3A;webpack&#x5426;&#x5219;&#x4F1A;&#x62A5;&#x9519;</p>
+<h3 id="&#x9879;&#x76EE;&#x76EE;&#x5F55;&#x7ED3;&#x6784;"><a href="#&#x9879;&#x76EE;&#x76EE;&#x5F55;&#x7ED3;&#x6784;" class="headerlink" title="&#x9879;&#x76EE;&#x76EE;&#x5F55;&#x7ED3;&#x6784;"></a>&#x9879;&#x76EE;&#x76EE;&#x5F55;&#x7ED3;&#x6784;</h3><ul>
+<li>/app<ul>
+<li>main.js</li>
+<li>component.js</li>
+</ul>
+</li>
+<li>/build<ul>
+<li>bundle.js (&#x81EA;&#x52A8;&#x521B;&#x5EFA;)</li>
+<li>index.html</li>
+</ul>
+</li>
+<li>package.json</li>
+<li>webpack.config.js</li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x4F7F;&#x7528;webpack&#x7684;&#x6253;&#x5305;&#x547D;&#x4EE4;&#x5728;&#x6211;&#x4EEC;&#x7684;<code>/app</code>&#x91CC;&#x81EA;&#x52A8;&#x521B;&#x5EFA;<code>bundle.js</code></p>
+<h3 id="&#x8BBE;&#x7F6E;webpack"><a href="#&#x8BBE;&#x7F6E;webpack" class="headerlink" title="&#x8BBE;&#x7F6E;webpack"></a>&#x8BBE;&#x7F6E;webpack</h3><p><strong>webpack.config.js</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = {</span><br><span class="line">	entry: path.resolve(__dirname, &apos;app/main.js&apos;),</span><br><span class="line">	output: {</span><br><span class="line">		path: path.resolve(__dirname, &apos;build&apos;),</span><br><span class="line">		filename: &apos;bundle.js&apos;,</span><br><span class="line">	},</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>webpack&#x914D;&#x7F6E;&#x6587;&#x4EF6;<em>&#x5C5E;&#x6027;</em>&#x8BF4;&#x660E;&#xFF1A;</p>
+<ul>
+<li><strong>entry</strong>: &#x914D;&#x7F6E;&#x6253;&#x5305;&#x6587;&#x4EF6;&#x7684;&#x5165;&#x53E3;&#xFF0C;&#x53EF;&#x591A;&#x4E2A;&#x5165;&#x53E3;&#x6587;&#x4EF6;</li>
+<li><strong>resolve</strong>: &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x540E;&#x7F00;&#x540D;<br>&#x4F8B;&#x5982;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">resolve: {</span><br><span class="line">	extensions: [&apos;.js&apos;, &apos;.jsx&apos;],</span><br><span class="line">	alias: {</span><br><span class="line">		&apos;react&apos;: path.join(nodeModulesPath, &apos;react/react.js&apos;)</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x540E;&#x7F00;&#x540D;(extensions)&#x540E;&#xFF0C;&#x52A0;&#x8F7D;&#x6A21;&#x5757;&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x7701;&#x7565;&#x540E;&#x7F00;&#x540D;&#x3002;<br>&#x4F8B;&#x5982;&#xFF1A;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// &#x914D;&#x7F6E;&#x524D;&#x5F15;&#x7528;&#x6A21;&#x5757;</span><br><span class="line">var component =  require(&apos;./component.js&apos;);</span><br><span class="line"></span><br><span class="line">// &#x914D;&#x7F6E;&#x540E;&#x5F15;&#x7528;&#x6A21;&#x5757;</span><br><span class="line">var component = require(&apos;./component&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>&#x914D;&#x7F6E;&#x9879;(alias)&#x53EF;&#x4EE5;&#x4E3A;&#x5E38;&#x7528;&#x6A21;&#x5757;&#x914D;&#x7F6E;&#x6539;&#x5C5E;&#x6027;&#xFF0C;&#x53EF;&#x4EE5;&#x8282;&#x7701;&#x7F16;&#x8BD1;&#x641C;&#x7D22;&#x7684;&#x65F6;&#x95F4;</p>
+<ul>
+<li><strong>output</strong>: &#x914D;&#x7F6E;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;&#x548C;&#x6587;&#x4EF6;&#x540D;&#x7B49;</li>
+<li><strong>module(loader)</strong>: &#x52A0;&#x8F7D;&#x76F8;&#x5E94;&#x6A21;&#x5757;&#x6240;&#x9700;&#x8981;&#x7684;&#x52A0;&#x8F7D;&#x5668;<br>loader&#x914D;&#x7F6E;&#x9879;&#xFF1A;<ul>
+<li><code>test: /\.(js|jsx)$/</code>, &#x4F7F;&#x7528;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x5339;&#x914D;&#x8981;&#x5904;&#x7406;&#x7684;&#x6587;&#x4EF6;</li>
+<li><code>loader: &apos;eslint-loader</code>, &#x52A0;&#x8F7D;&#x8981;&#x4F7F;&#x7528;<em>loader</em>,<em>-loader</em>&#x53EF;&#x4EE5;&#x7701;&#x7565;</li>
+<li><code>include: [path.resolve(__dirname, &quot;src/app&quot;)]</code>, &#x628A;&#x8981;&#x5904;&#x7406;&#x7684;&#x76EE;&#x5F55;&#x5305;&#x62EC;&#x8FDB;&#x6765;</li>
+<li><code>exclued: [nodeModulesPath]</code>, &#x6392;&#x9664;&#x4E0D;&#x5904;&#x7406;&#x7684;&#x76EE;&#x5F55;<br>&#x76EE;&#x524D;&#x5DF2;&#x6709;&#x7684;loader&#x5217;&#x8868;:<br><a href="https://webpack.github.io/docs/list-of-loaders.html" target="_blank" rel="external">https://webpack.github.io/docs/list-of-loaders.html</a></li>
+</ul>
+</li>
+</ul>
+<p>&#x793A;&#x4F8B;&#xFF1A;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">module: {</span><br><span class="line">	preloaders: [</span><br><span class="line">		{</span><br><span class="line">			test: /\.(js|jsx)$/,</span><br><span class="line">			loader: &apos;eslint-loader&apos;,</span><br><span class="line">			include: [path.resolve(__dirname, &quot;src/app&quot;)],</span><br><span class="line">			exclude: [nodeModulesPath]</span><br><span class="line">		}</span><br><span class="line">	],</span><br><span class="line">	loaders: [</span><br><span class="line">		{</span><br><span class="line">			test: /\.(js|jsx)$/,    // &#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5339;&#x914D; .js &#x548C; .jsx &#x6587;&#x4EF6;</span><br><span class="line">			loader: &apos;babel-loader?optional=runtime&amp;stage=0&apos;,  //&#x5BF9;&#x5339;&#x914D;&#x7684;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x7684;loader,`?`&#x540E;&#x9762;&#x662F;&#x52A0;&#x8F7D;&#x5668;&#x6240;&#x5E26;&#x7684;&#x53C2;&#x6570;</span><br><span class="line">			exclued: [nodeModulesPath]     // &#x6392;&#x9664;node module&#x4E2D;&#x7684;&#x6587;&#x4EF6;</span><br><span class="line">		}</span><br><span class="line">	]</span><br><span class="line">}</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>plugins</strong>: &#x914D;&#x7F6E;&#x8981;&#x4F7F;&#x7528;&#x7684;&#x63D2;&#x4EF6;&#x3002;plugin&#x662F;&#x6BD4;loader&#x529F;&#x80FD;&#x66F4;&#x5F3A;&#x5927;&#x7684;&#x63D2;&#x4EF6;&#xFF0C;&#x80FD;&#x4F7F;&#x7528;&#x66F4;&#x591A;&#x7684;wepack api&#x3002;<br>&#x793A;&#x4F8B;&#xFF1A;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">	// &#x538B;&#x7F29;&#x6253;&#x5305;&#x7684;&#x6587;&#x4EF6;</span><br><span class="line">	new webpack.optimize.UglifyJsPlugin({</span><br><span class="line">		compress: {</span><br><span class="line">			warnings: false</span><br><span class="line">		}</span><br><span class="line">	}),</span><br><span class="line">	// &#x5141;&#x8BB8;&#x9519;&#x8BEF;&#x4E0D;&#x6253;&#x65AD;&#x7A0B;&#x5E8F;</span><br><span class="line">	new webpack.NoErrorsPlugin(),</span><br><span class="line">	// &#x628A;&#x6307;&#x5B9A;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#x590D;&#x5236;&#x5230;&#x6307;&#x5B9A;&#x7684;&#x76EE;&#x5F55;</span><br><span class="line">	new TransferWebpackPlugin([</span><br><span class="line">		{form: &apos;www&apos;}</span><br><span class="line">	], path.resolve(__dirname, &quot;src&quot;))</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>&#x76EE;&#x524D;&#x5DF2;&#x6709;&#x7684;plugins&#x5217;&#x8868;&#xFF1A;<br><a href="http://webpack.github.io/docs/list-of-plugins.html" target="_blank" rel="external">http://webpack.github.io/docs/list-of-plugins.html</a></p>
+<h3 id="&#x8FD0;&#x884C;&#x7F16;&#x8BD1;"><a href="#&#x8FD0;&#x884C;&#x7F16;&#x8BD1;" class="headerlink" title="&#x8FD0;&#x884C;&#x7F16;&#x8BD1;"></a>&#x8FD0;&#x884C;&#x7F16;&#x8BD1;</h3><p>&#x73B0;&#x5728;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x914D;&#x7F6E;&#xFF0C;&#x6211;&#x4EEC;&#x63A5;&#x7740;&#x6DFB;&#x52A0;&#x9700;&#x8981;&#x53BB;&#x7F16;&#x8BD1;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x9996;&#x5148;&#x6765;&#x5B8C;&#x6210;&#x4E00;&#x4E2A;<code>hello world</code></p>
+<p><strong>app/component.js</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">module.exports = function () {</span><br><span class="line">	var element = document.createElement(&apos;h1&apos;);</span><br><span class="line"></span><br><span class="line">	element.innerHTML = &apos;Hello World&apos;;</span><br><span class="line"></span><br><span class="line">	return element;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><strong>app/main.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;</span><br><span class="line"></span><br><span class="line">var component = require(&apos;./component.js&apos;);</span><br><span class="line"></span><br><span class="line">document.body.appendChild(component());</span><br></pre></td></tr></table></figure></p>
+<p>&#x5728;&#x9879;&#x76EE;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#xFF0C;&#x8FD0;&#x884C;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ webpack</span><br></pre></td></tr></table></figure></p>
+<p>&#x5728;<code>/build</code>&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;<code>bundle.js</code>&#x6587;&#x4EF6;</p>
+<p>&#x6B64;&#x65F6;&#x6253;&#x5F00;<code>/build</code>&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7684;<code>index.html</code>&#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8F93;&#x51FA;&#x7684;<strong>Hello World</strong>&#x4E86;</p>
+<h3 id="&#x8BBE;&#x7F6E;package-json-script"><a href="#&#x8BBE;&#x7F6E;package-json-script" class="headerlink" title="&#x8BBE;&#x7F6E;package.json script"></a>&#x8BBE;&#x7F6E;package.json script</h3><p>&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x5C06;webpack&#x6DFB;&#x52A0;&#x8FDB;&#x4F9D;&#x8D56;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install webpack --save</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x7684;&#x914D;&#x7F6E;&#x548C;&#x4E4B;&#x524D;&#x4E0D;&#x540C;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;<code>--save</code>,&#x800C;&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x914D;&#x7F6E;&#x7684;&#x662F;<code>--save-dev</code>&#xFF0C;&#x8FD9;&#x91CC;&#x4E00;&#x4E2A;&#x662F;&#x5C06;webpack&#x6DFB;&#x52A0;&#x8FDB;&#x9879;&#x76EE;&#x7684;&#x4F9D;&#x8D56;&#x4E2D;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x6DFB;&#x52A0;&#x8FDB;&#x4E86;&#x5F00;&#x53D1;&#x4F9D;&#x8D56;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4ECE;<code>package.json</code>&#x4E2D;&#x770B;&#x51FA;&#x533A;&#x522B;</p>
+<p><strong>package.json</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  &quot;name&quot;: &quot;learn-webpack-react&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;webpack.config.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: {</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><br><span class="line">  },</span><br><span class="line">  &quot;author&quot;: &quot;ArthurFree&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;MIT&quot;,</span><br><span class="line">  &quot;devDependencies&quot;: {</span><br><span class="line">    &quot;webpack&quot;: &quot;^1.13.2&quot;</span><br><span class="line">  },</span><br><span class="line">  &quot;dependencies&quot;: {</span><br><span class="line">    &quot;webpack&quot;: &quot;^1.13.2&quot;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4ECE;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x4E86;<code>package.json</code>&#x6587;&#x4EF6;&#x4E2D;&#x4E24;&#x4E2A;&#x914D;&#x7F6E;&#x5206;&#x522B;&#x5BF9;&#x5E94;&#x4E86;&#x4E24;&#x4E2A;&#x5B57;&#x6BB5;&#x3002;&#x5F53;&#x5F00;&#x53D1;&#x7ED3;&#x675F;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x518D;&#x9700;&#x8981;&#x6B64;&#x4F9D;&#x8D56;&#x65F6;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x6DFB;&#x52A0;&#x8FDB;&#x5F00;&#x53D1;&#x4F9D;&#x8D56;(devDependencies)&#x4E2D;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x7F16;&#x8BD1;&#x6B65;&#x9AA4;&#x653E;&#x5230;&#x8FD9;&#x6761;&#x6307;&#x4EE4;&#x4E2D;&#xFF1A;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run build</span><br></pre></td></tr></table></figure></p>
+<p>&#x6211;&#x4EEC;&#x5728;<code>package.json</code>&#x6587;&#x4EF6;&#x4E2D;&#x6DFB;&#x52A0;&#x4EE5;&#x4E0B;&#x5185;&#x5BB9;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: {</span><br><span class="line">    &quot;build&quot;: &quot;webpack&quot;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E0A;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x7F16;&#x8BD1;&#x4E86;&#x3002;</p>
+<p>&#x5F53;&#x9879;&#x76EE;&#x8D8A;&#x6765;&#x8D8A;&#x590D;&#x6742;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x79CD;&#x5C06;&#x590D;&#x6742;&#x7684;&#x64CD;&#x4F5C;&#x9690;&#x85CF;&#x5728;<code>scripts</code>&#x91CC;&#x9762;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x7B80;&#x5316;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>npm&#x4F1A;&#x627E;&#x5230;webpack&#xFF0C;<code>npm run</code>&#x4F1A;&#x628A;&#x5B83;&#x4E34;&#x65F6;&#x52A0;&#x5230;<code>PATH</code>&#x6765;&#x8BA9;&#x6211;&#x4EEC;&#x8FD9;&#x6761;&#x6307;&#x4EE4;&#x5DE5;&#x4F5C;</p>
+<h3 id="&#x8BBE;&#x7F6E;webpack-dev-server"><a href="#&#x8BBE;&#x7F6E;webpack-dev-server" class="headerlink" title="&#x8BBE;&#x7F6E;webpack-dev-server"></a>&#x8BBE;&#x7F6E;<code>webpack-dev-server</code></h3><p>&#x5728;&#x9879;&#x76EE;&#x4E2D;&#xFF0C;&#x9891;&#x7E41;&#x7684;&#x8F93;&#x5165;<code>npm run build</code>&#x547D;&#x4EE4;&#xFF0C;&#x4E5F;&#x663E;&#x5F97;&#x975E;&#x5E38;&#x739B;&#x6CD5;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x8FC7;<code>webpack-dev-server</code>&#x53EF;&#x4EE5;&#x8BA9;&#x5176;&#x4E00;&#x76F4;&#x8FD0;&#x884C;&#x7740;</p>
+<p>&#x9996;&#x5148;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x5B89;&#x88C5;&#x5B83;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i webpack-dev-server --save</span><br></pre></td></tr></table></figure>
+<p>&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8C03;&#x6574;&#x4E00;&#x4E0B;<code>package.json</code>&#x6587;&#x4EF6;&#x4E2D;&#x7684;<code>scripts</code>&#x90E8;&#x5206;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">	&quot;scripts&quot;: {</span><br><span class="line">		&quot;build&quot;: &quot;webpack&quot;,</span><br><span class="line">		&quot;dev&quot;: &quot;webpack-dev-server --devtool eval --progress --colors --hot --content-base build&quot;</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7136;&#x540E;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x8FD0;&#x884C;<code>npm run dev</code>&#x65F6;&#xFF0C;&#x4F1A;&#x6267;&#x884C;dev&#x5C5E;&#x6027;&#x4E2D;&#x7684;&#x503C;</p>
+<p>&#x5176;&#x4E2D;&#x6307;&#x4EE4;&#x914D;&#x7F6E;&#x8BF4;&#x660E;:</p>
+<ol>
+<li><code>webpack-dev-server</code>: &#x5728;&#x672C;&#x673A;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;<strong>localhost:8080</strong>&#x670D;&#x52A1;&#x5668;</li>
+<li><code>--devtool eval</code>: &#x4E3A;&#x4F60;&#x7684;&#x4EE3;&#x7801;&#x521B;&#x5EFA;&#x6E90;&#x5730;&#x5740;&#x3002;&#x5F53;&#x6709;&#x4EFB;&#x4F55;&#x62A5;&#x9519;&#x7684;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x8BA9;&#x4F60;&#x66F4;&#x52A0;&#x7CBE;&#x786E;&#x5730;&#x5B9A;&#x4F4D;&#x5230;&#x6587;&#x4EF6;&#x548C;&#x884C;&#x53F7;</li>
+<li><code>--progress</code>: &#x663E;&#x793A;&#x5408;&#x5E76;&#x4EE3;&#x7801;&#x8FDB;&#x5EA6;</li>
+<li><code>--colors</code>: &#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x663E;&#x793A;&#x989C;&#x8272;</li>
+<li><code>--content-base build</code>: &#x6307;&#x5411;&#x8BBE;&#x7F6E;&#x7684;&#x8F93;&#x51FA;&#x76EE;&#x5F55;</li>
+</ol>
+<p>&#x5F53;&#x4F60;&#x8FD0;&#x884C;<code>npm run dev</code>&#x65F6;&#xFF0C;&#x4F1A;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x7136;&#x540E;&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#xFF0C;&#x7136;&#x540E;&#x81EA;&#x52A8;&#x91CD;&#x65B0;&#x5408;&#x5E76;&#x4EE3;&#x7801;&#x3002;<br>&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x8BBF;&#x95EE;<a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a>,&#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6548;&#x679C;&#x4E86;&#x3002;</p>
+<p>&#x4E0D;&#x8FC7;&#x8FD9;&#x91CC;&#x8FD8;&#x6709;&#x4E9B;&#x4E0D;&#x8DB3;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x4FEE;&#x6539;&#x5B8C;&#x6587;&#x4EF6;&#x4FDD;&#x5B58;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x624B;&#x52A8;&#x7684;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x5237;&#x65B0;&#xFF0C;&#x624D;&#x80FD;&#x770B;&#x5230;&#x6700;&#x65B0;&#x7684;&#x7ED3;&#x679C;&#x3002;<br>&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x811A;&#x672C;&#x5F53;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x65F6;&#x53BB;&#x81EA;&#x52A8;&#x5237;&#x65B0;&#x5E94;&#x7528;&#xFF0C;&#x6211;&#x4EEC;&#x5728;<code>webpack.config.js</code>&#x6587;&#x4EF6;&#x7684;&#x914D;&#x7F6E;&#x4E2D;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x5165;&#x53E3;&#x70B9;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = {</span><br><span class="line">	ertry: [</span><br><span class="line">		&apos;webpack/hot/dev-server&apos;,</span><br><span class="line">		&apos;webpack-dev-server/client?http://localhost:8080&apos;,</span><br><span class="line">		path.resolve(__dirname, &apos;app/main.js&apos;)</span><br><span class="line">	],</span><br><span class="line">	output: {</span><br><span class="line">		path: path.resolve(__dirname, &apos;build&apos;),</span><br><span class="line">		filename: &apos;bundle.js&apos;</span><br><span class="line">	},</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x81F3;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4E86;&#x4E00;&#x4E2A;</p>
+<h3 id="&#x6A21;&#x5757;"><a href="#&#x6A21;&#x5757;" class="headerlink" title="&#x6A21;&#x5757;"></a>&#x6A21;&#x5757;</h3><p>webpack&#x5141;&#x8BB8;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x6A21;&#x5757;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x662F;&#x2019;&#x5E95;&#x5C42;&#x2019;&#x5FC5;&#x987B;&#x4F7F;&#x7528;&#x540C;&#x4E00;&#x79CD;&#x5B9E;&#x73B0;&#x3002;</p>
+<h4 id="ES6&#x6A21;&#x5757;"><a href="#ES6&#x6A21;&#x5757;" class="headerlink" title="ES6&#x6A21;&#x5757;"></a>ES6&#x6A21;&#x5757;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import MyModule form &apos;./MyModule.js&apos;;</span><br></pre></td></tr></table></figure>
+<h4 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var MyMoudle = require(&apos;./MyModule.js&apos;);</span><br></pre></td></tr></table></figure>
+<h4 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;./MyModule.js&apos;], function (MyModue) {</span><br><span class="line">	</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h3 id="&#x6587;&#x4EF6;&#x8DEF;&#x5F84;"><a href="#&#x6587;&#x4EF6;&#x8DEF;&#x5F84;" class="headerlink" title="&#x6587;&#x4EF6;&#x8DEF;&#x5F84;"></a>&#x6587;&#x4EF6;&#x8DEF;&#x5F84;</h3><p>&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#x4F1A;&#x6309;&#x7167;&#x5B83;&#x7684;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x6765;&#x52A0;&#x8F7D;&#xFF0C;&#x6211;&#x4EEC;&#x5728;<code>/app</code>&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7EE7;&#x7EED;&#x521B;&#x5EFA;&#x9879;&#x76EE;&#x7ED3;&#x6784;</p>
+<ul>
+<li>/app<ul>
+<li>/modules<ul>
+<li>MyModule.js</li>
+</ul>
+</li>
+<li>main.js</li>
+<li>utils.js</li>
+</ul>
+</li>
+</ul>
+<p>&#x5728;<code>app/main.js</code>&#x4E2D;&#x5F15;&#x5165;<code>app/modules/Module.js</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// ES6</span><br><span class="line">import MyModule from &apos;./modules/MyModule.js&apos;</span><br><span class="line"></span><br><span class="line">// CommonJS</span><br><span class="line">var MyModule = require(&apos;./modules/MyModule.js&apos;)</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;<code>./</code>&#x6307;&#x76F8;&#x5BF9;&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;</p>
+<p>&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5728;<code>MyModule.js</code>&#x4E0B;&#x5F15;&#x5165;<code>app/utils</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// ES6 &#x76F8;&#x5BF9;&#x8DEF;&#x5F84;</span><br><span class="line">import utils from &apos;./../utils.js&apos;</span><br><span class="line"></span><br><span class="line">// ES6 &#x76F8;&#x5BF9;&#x8DEF;&#x5F84;</span><br><span class="line">import utils from &apos;/utils.js&apos;</span><br><span class="line"></span><br><span class="line">// CommonJS &#x76F8;&#x5BF9;&#x8DEF;&#x5F84;</span><br><span class="line">var utils = require(&apos;./../utils.js&apos;);</span><br><span class="line"></span><br><span class="line">// CommonJS &#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;</span><br><span class="line">var utils = require(&apos;/utils&apos;);</span><br></pre></td></tr></table></figure>
+<p><strong>&#x76F8;&#x5BF9;&#x8DEF;&#x5F84;</strong>&#x662F;&#x76F8;&#x5BF9;&#x5F53;&#x524D;&#x76EE;&#x5F55;<br><strong>&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;</strong>&#x662F;&#x76F8;&#x5BF9;&#x5165;&#x53E3;&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;<code>main.js</code></p>
+<h2 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h2><p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x662F;&#x7B80;&#x5355;&#x914D;&#x7F6E;&#x4E86;webpack&#x5F00;&#x53D1;&#x73AF;&#x5883;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x5B9E;&#x9645;&#x5F00;&#x53D1;&#x4E2D;&#x7684;&#x7B80;&#x5355;&#x7684;&#x6A21;&#x5757;&#x52A0;&#x8F7D;&#x4EE5;&#x53CA;&#x5B9E;&#x65F6;&#x5237;&#x65B0;&#x529F;&#x80FD;&#x3002;&#x5176;&#x5728;&#x5F00;&#x53D1;&#x73AF;&#x5883;&#x4E2D;&#x8FD8;&#x6709;&#x66F4;&#x591A;&#x7684;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x53BB;&#x4F7F;&#x7528;&#xFF0C;&#x6240;&#x4EE5;&#x63A5;&#x4E0B;&#x6765;&#x5C06;&#x7EE7;&#x7EED;&#x5B66;&#x4E60;&#x4F7F;&#x7528;webpack&#xFF0C;&#x5E76;&#x8FD0;&#x7528;&#x5230;React&#x4E2D;&#x3002;</p>
+<h2 id="&#x53C2;&#x8003;"><a href="#&#x53C2;&#x8003;" class="headerlink" title="&#x53C2;&#x8003;"></a>&#x53C2;&#x8003;</h2><blockquote>
+<p>webpack&#x548C;React&#x5C0F;&#x4E66;&#xFF1A;<br><a href="https://fakefish.github.io/react-webpack-cookbook/Getting-started.html" target="_blank" rel="external">https://fakefish.github.io/react-webpack-cookbook/Getting-started.html</a><br>WebPack &#x5E38;&#x7528;&#x529F;&#x80FD;&#x4ECB;&#x7ECD;:<br><a href="https://segmentfault.com/a/1190000004172052" target="_blank" rel="external">https://segmentfault.com/a/1190000004172052</a><br>&#x8D44;&#x6E90;&#x6C47;&#x603B;:<br><a href="http://cnodejs.org/topic/56ef3edd532839c33a99d00e" target="_blank" rel="external">http://cnodejs.org/topic/56ef3edd532839c33a99d00e</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端工具/" rel="tag">#前端工具</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/24/关于sublime的配置/" rel="next" title="关于sublime的配置">
+                <i class="fa fa-chevron-left"></i> 关于sublime的配置
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/26/webpack学习-一/"
+           data-title="webpack学习(一)" data-url="http://yoursite.com/2016/09/26/webpack学习-一/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/ArthurFree.png"
+               alt="ArthurFree" />
+          <p class="site-author-name" itemprop="name">ArthurFree</p>
+          <p class="site-description motion-element" itemprop="description">安安静静写代码......</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#webpack学习-一"><span class="nav-number">1.</span> <span class="nav-text">webpack学习(一)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">1.1.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目目录结构"><span class="nav-number">1.1.2.</span> <span class="nav-text">项目目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置webpack"><span class="nav-number">1.1.3.</span> <span class="nav-text">设置webpack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行编译"><span class="nav-number">1.1.4.</span> <span class="nav-text">运行编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置package-json-script"><span class="nav-number">1.1.5.</span> <span class="nav-text">设置package.json script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置webpack-dev-server"><span class="nav-number">1.1.6.</span> <span class="nav-text">设置webpack-dev-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块"><span class="nav-number">1.1.7.</span> <span class="nav-text">模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6模块"><span class="nav-number">1.1.7.1.</span> <span class="nav-text">ES6模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CommonJS"><span class="nav-number">1.1.7.2.</span> <span class="nav-text">CommonJS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AMD"><span class="nav-number">1.1.7.3.</span> <span class="nav-text">AMD</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件路径"><span class="nav-number">1.1.8.</span> <span class="nav-text">文件路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">1.3.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ArthurFree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"arthurfree"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
