@@ -1,0 +1,462 @@
+#webpack学习(二)
+
+## 前言
+
+这里将新建一个项目结合React+webpack进行实践学习。
+
+## 配置ReactJS
+
+### 安装ReactJS
+在当前项目目录下，输入
+```
+$ npm install react --save
+```
+
+项目结构：
+
+和上一篇的结构大体相同
+-	/app
+	-	component.jsx
+	-	main.js
+-	/build
+	-	index.html
+	-	bundle.js
+-	webpack.config.js
+-	package.json
+
+接下来，我们将下面代码写入项目文件中
+
+`/app/component.jsx`
+```
+import React from 'react'
+
+export default class Hello extends React.Components {
+	render() {
+		return <h1>Hello World</h1>
+	}
+}
+```
+
+`/app/main.js`
+```
+import React form 'react'
+import Hello form './component.jsx'
+
+main()
+
+function main() {
+	React.render(<Hello />, document.getElementById('app'));
+}
+```
+
+`/build/index.html`
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script type="text/javascript" src="http://localhost:8080/webpack-dev-server.js"></script>
+	<script type="text/javascript" src="bundle.js"></script>
+</body>
+</html>
+```
+
+### 配置webpack
+
+因为浏览器是无法识别`JSX`这种语法的，所以我们还需要将`JSX`这种格式转换为`JS`格式
+
+首先，我们来安装webpack的babel加载器
+
+```
+$ npm install babel-loader --save-dev
+```
+
+接下来，我们配置`webpack.config.js`文件
+`webpack.config.js`
+```
+var path = require('path');
+var config = {
+	entry: path.resolve(__dirname, 'app/main.js'),
+	output: {
+		path: path.resolve(__dirname, 'build'),
+		filename: 'bundle.js'
+	},
+	module: {
+		loaders: [{
+			test: /\.jsx?$/,
+			loader: 'babel'
+		}]
+	}
+};
+
+module.exports = config;
+```
+
+webpack会测试项目中需要的每一条路径，如果项目中使用ES6语法，比如`import MyComponent from './Component.jsx'`,会去匹配`./Component.jsx`
+
+### 在开发环境使用压缩文件
+
+为了不让webpack去遍历ReactJS及其所有依赖，我们可以重写它的行为
+
+`webpack.config.js`
+```
+var path = require('path');
+var node_modules = path.resolve(__dirname, 'node_modules');
+var pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
+
+config = {
+	ertry: ['webpack/hot/dev-server', path.resolve(path.resolve(__dirname, 'app/main.js'))],
+	resolve: {
+		alias: {
+			'react': pathToReact
+		}
+	},
+	output: {
+		path: path.resolve(__dirname, 'build'),
+		filename: 'bundle.js'
+	},
+	module: {
+		loaders: [{
+			test: /\.jsx?$/,
+			loader: 'babel'
+		}],
+		noParse: [pathToReact]
+	}
+};
+```
+
+这里，我们每当引入`react`代码时，会使用压缩后的ReactJS文件，而不是到`node_modules`中去找。然后阻止webpack尝试去解析那个压缩文件，因为并不需要这样。
+
+### 加载CSS
+
+#### 在webpack中添加css加载器
+
+安装加载器:
+```
+$ npm install css-loader style-loader --save-dev
+```
+然后将加载器添加到`webpack.config.js`文件中
+```
+module: {
+	loaders: [{
+		test: /\.jsx?$/,
+		loader: 'babel'
+	},{
+		test: /\.css$/,
+		loader: 'style!css'
+	}]
+}
+```
+`style-loader`会把css文件嵌入到html的style标签里，`css-loader`会把css按字符串导出，一般会组合使用这两个loader。
+
+加载CSS文件与加载其他模块相同，例如
+```
+import './main.css'
+```
+#### css加载策略
+
+1. 所有css文件合并为一个
+
+在项目的主入口文件中为整个项目加载所有的CSS
+`/app/main.js`
+```
+import './project-styles.css';
+```
+
+2. 懒加载
+
+当应用有多个入口文件时，可以在每个入口点包含各自的CSS
+将模块用文件夹费力，每个文件夹中有自己的js和css文件。当应用发布的时候，导入的css已经加载到每一个入口文件中
+
+3. 制定的组件
+
+根据这个策略为每一个组件创建css文件，可以让组件名和css中的class使用同一个命名空间，来避免一个组件中的一些class干扰到另外一些组件的class
+
+示例：
+`/app/components/MyComponent.css`
+```
+.MyComponent-warpper {
+	background-color: #EEE;
+}
+```
+`/app/components/MyComponent.jsx`
+```
+import './MyComponent.css';
+import React from 'react'
+
+export default React.createClass({
+	render: function () {
+		return (
+			<div className="MyComponent-wrapper">
+				<h1>Hello World</h1>
+			</div>
+		)
+	}
+});
+```
+
+4. 根据项目考虑css策略
+
+示例：
+`/app/component/MyComponent.jsx`
+```
+impoert React from 'react'
+
+var style = {
+	backgroundColor: '#EEE'
+}
+
+export default React.createClass({
+	render: function () {
+		<div style={style}>
+			<h1>Hello World</h1>
+		</div>
+	}
+});
+```
+
+### 加载图片
+
+安装加载器
+```
+$ npm install url-loader --save-dev
+```
+它会把需要转换的路径变成BASE64字符串。webpack会把css中的'url()'像其他require或者import来处理
+示例：
+```
+module: {
+	loaders: [{
+		test: /\.(png|jpg)$/,
+		laoder: 'url?limit=25000'
+	}]
+}
+```
+
+url-loader传入的'limit'参数当图片不大于25kb的时候自动在它从属的css文件中转成BASE64字符串
+
+## 部署策略
+
+发布生产前的准备：
+-	配置package.json中的script
+-	创建一个生产配置
+
+### 创建脚本
+
+之前设置了`npm run dev`命令，现在我们需要在添加一个`npm run deploy`
+
+```
+"script": {
+	"deploy": "NODE_ENV=production webpack -p --config webpack.production.config.js"
+}
+```
+这里只是使用命令中的参数来指向另一个配置文件。使用环境变量'production'来让我们的模块自动去优化。
+
+### 创建生产配置
+`webpack.production.config.js`
+```
+var path = require('path')
+var node_modules_dir = path.resolve(__dirname, 'node_modules');
+
+var config = {
+	entry: path.resolve(__dirname, 'app/main.js');
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'bundle.js'
+	},
+	module: {
+		loaders: [{
+			test: /\.js$/,
+			exclude: [node_modules_dir],
+			loader: 'babel'
+		}]
+	}
+};
+
+module.export = config;
+```
+
+和开发配置的主要不同在指向了一个不同的输出路径，然后没有了workflow的配置和优化。新加入到配置里的是处理缓存的配置
+
+现在在项目根目录下运行`npm run deploy`，webpack会运行生产模式
+
+### 单入口模式的情景
+
+-	应用较小
+-	很少更新应用
+-	不用太关心初始加载时间
+
+### 应用分离的情景
+
+当项目依赖大型库（例如ReactJS），需要考虑将依赖分离出去，这样能够让用户在更新应用之后不需要再次下载第三方文件。
+
+当遇到下面几个情况时，考虑：
+-	第三方的体积达到整个应用的20%甚至更高时
+-	更新应用只会更新一小部分
+-	没有很关注初始加载时间，不过关注优化那些回访用户在你更新后的体验
+-	手机用户
+
+示例：
+`webpack.production.config.js`
+```
+var path = require('path');
+var webpack = require('webpack');
+var node_modules_dir = path.resolve(__dirname, 'node_modules');
+
+var config = {
+	entry: {
+		// 当React作为一个node模块安装时
+		// 我们可以直接指向它，例如require('react')
+		app: path.resolve(__dirname, 'app/main.js'),
+		vendors: ['react']
+	},
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'app.js'
+	},
+	module: {
+		loaders: [{
+			test: /\.js$/,
+			exclued: [node_module],
+			loader: 'babel'
+		}]
+	},
+	plugins: [
+		new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js');
+	]
+};
+
+module.exports = config;
+```
+
+上面的配置会在`dist/`下创建app.js和vendors.js两个文件.**这两个文件均需要添加进HTML文件中，不然会出现`Uncaught ReferenceError: webpack is not defined`**
+
+### 多重入口的情景
+
+-	应用有多种不同的用户体验，但共享了很多代码
+-	有一个使用更少组件的手机版本
+-	应用典型的权限控制，不想为普通用户加载所有的管理用户的代码
+
+以创建一个拥有更少组件的手机页面的例子：
+`webpack.production.config.js`
+```
+var path = require('path');
+var webpack = require('webpack');
+var node_module_dir = path.resolve(__dirname, 'node_modules');
+
+var config = {
+	entry: {
+		app: path.resolve(__dirname, 'app/main.js'),
+		mobile: path.resolve(__dirname, 'app/mobile.js'),
+		vendors: ['react']            // 其他库
+	},
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: '[name].js'         // 这里使用了变量
+	},
+	module: {
+		loaders: [{
+			test: /\.js$/,
+			exclude: [node_modules],
+			loader: 'babel'
+		}]
+	},
+	plugins: [
+		new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
+	]
+};
+
+module.exports = config;
+```
+
+这里会在`dist/`文件夹下创建三个文件：app.js,mobile.js和vendors.js。大部分代码在mobile.js中，也有一部分在app.js中，不会在用一个页面中同时加载app.js和mobile.js。
+
+### 懒加载入口文件的情景
+
+-	一个相对较大的应用，可以让用户可以访问应用的不同部分
+-	非常关注初始渲染时间
+
+`webpack.production.config.js`
+```
+var path = require('path');
+var webpack = require('webpack');
+var node_modules_dir = path.resolve(__dirname, 'node_modules');
+
+var config = {
+	entry: {
+		app: path.resolve(__dirname, 'app/main.js'),
+		vendors: ['react']
+	},
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: '[name].js'
+	},
+	modules: {
+		loaders: [{
+			test: /\.js$/,
+			exclude: [node_modules_dir],
+			loader: 'babel'
+		}]
+	},
+	plugins: [
+		new webpack.optimizi.CommonsPlugin('vindors', 'vendors.js');
+	]
+}
+
+module.exports = config;
+```
+无需再配置中设置懒加载依赖，webpack会自动理解它们，并进行分析。
+示例： 如何加载一个'个人信息页'
+
+`main.js（ES6）`
+```
+import React extends React.Componenet {
+	construct() {
+		this.state = { currentComponent }
+	}
+	openProfile() {
+		requrie.ensure([], () => {
+			var Profile = require('./Profile.js');
+			this.setState({
+				currentComponent: Profile
+			});
+		});
+	}
+	render() {
+		return (
+			return <div>{this.state.currentComponent()}</div>
+		);
+	}
+}
+React.render(<App />, document.body);
+```
+需要把上面的代码写到一个路由中。
+
+require.ensure的第一个参数表示当你尝试加载一段由另一段懒加载的代码加载的代码的话，把它作为依赖写在数组里，把路径写进去，例如`['./FunnyButton.js']`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 参考
+> React和webpack小书：
+> [https://fakefish.github.io/react-webpack-cookbook/index.html](https://fakefish.github.io/react-webpack-cookbook/index.html)
+
