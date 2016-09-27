@@ -69,11 +69,35 @@ var component =  require('./component.js');
 var component = require('./component');
 ```
 
-配置项(alias)可以为常用模块配置改属性，可以节省编译搜索的时间
+`配置项(alias)`可以为常用模块配置该属性，可以节省编译搜索的时间。意思是去匹配设置好路径的某一文件。
 
 
 -	**output**: 配置输出文件的路径和文件名等
 -	**module(loader)**: 加载相应模块所需要的加载器
+
+`noParse`告诉webpack尝试解析压缩文件时，这种行为是不允许的。
+示例:
+```
+var pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
+
+var config = {
+	module: {
+		noParse: [pathToReact]
+	}
+}
+```
+
+loader加载顺序： prelaoders, laoders, postloaders, 分别代表前中后三个处理状态.
+官方建议：
+-	对于预先编译的javascript(如coffee, es6等)和一些非js文件，在preloaders里面处理
+-	对于javascript的loader建议在`loaders`或`preloaders`里面进行处理
+-	建议preloaders和postloader的过程中使用相同的语言
+
+示例：
+-	preloaders, 图片压缩
+-	loaders(配置文件)，coffee-script转换成js
+-	postloaders, 代码覆盖率测试等
+
 loader配置项：
 	-	`test: /\.(js|jsx)$/`, 使用正则表达式，匹配要处理的文件
 	-	`loader: 'eslint-loader`, 加载要使用*loader*,*-loader*可以省略
@@ -341,3 +365,5 @@ var utils = require('/utils');
 > [https://segmentfault.com/a/1190000004172052](https://segmentfault.com/a/1190000004172052)
 > 资源汇总: 
 > [http://cnodejs.org/topic/56ef3edd532839c33a99d00e](http://cnodejs.org/topic/56ef3edd532839c33a99d00e)
+> Webpack构建之法，Loader: 
+> [http://www.jianshu.com/p/c9af1b556266](http://www.jianshu.com/p/c9af1b556266)
