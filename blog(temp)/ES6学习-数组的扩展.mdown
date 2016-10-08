@@ -1,0 +1,107 @@
+# ES6学习 - 数组的扩展
+
+## #1 Array.from()
+
+此方法可以将两类对象转为真正的数组：
+1. 类似数组的对象(array-like object)
+2. 可遍历(iterable)的对象(包括ES6新增的数据结构Set和Map)
+
+类数组对象：
+```
+let arrayLike = {
+	'0': 'a',
+	'1': 'b',
+	'2': 'c',
+	length: 3
+};
+
+//es5写法
+var arr1 = [].slice.call(arrayLike); // ['a', 'b', 'c']
+
+// es6的写法
+let arr2 = Array.from(arrayLike); // ['a', 'b', 'c']
+```
+> 备注: 
+> [slice](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) - 浅复制（shallow copy）数组的一部分到一个新的数组，并返回这个新数组。
+> [splice](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) - 用新元素替换旧元素，以此修改数组的内容。
+
+### #1.1 常见类似数组对象
+常见类似数组对象： DOM操作返回的NodeList集合，函数内部的arguments对象。
+
+DOM操作返回的NodeList集合： 
+```
+let ps = document.querySelectorAll('p');
+```
+
+如果参数是一个真正的数组，会返回一个一模一样的新数组。
+
+扩展运算符(`...`)也可以将某些数据角狗转为数组。
+```
+// argument对象
+function foo() {
+	var args = [...arguments];
+}
+
+// NodeLists对象
+[...document.querySelectorAll('div')]
+```
+
+类似数组对象本质特点只有一点，即必须有`length`属性。所以，有length属性的对象都可以通过`Array.from`来转为数组，而扩展运算符无法转换。
+扩展运算符无法转换：
+```
+Array.from({ length: 3 }); // [ undefined, undefined, undefined ]
+```
+
+未部署该方法的浏览器，使用`Array.prototype.slice`方法代替。
+```
+const toArray = (() => 
+	Array.from ? Array.from : obj => [].slice.call(obj)
+)();
+```
+
+### #1.2 第二个参数
+
+作用类似于`map`方法，用来对每个元素进行处理，将处理后的值放入返回的数组。
+```
+Array.from(arrayLike, x => x * x);
+// 等同于
+Array.from(arrayLike).map(x => x * x);
+
+Array.from([1, 2, 3], (x) => x * x); // [1, 4, 9]
+```
+
+`Array.from()`可以将各种值转为真正的数组
+```
+Array.from({ length: 2 }, () => 'jack');  // ['jack', 'jack']
+```
+`Array.from`的第一个参数指定了第二个参数运行的次数。
+
+另一个应用：将字符串转为数组，然后返回字符串的长度。可以正确处理各种Unicode字符，避免将大于`\uFFFF`的Unicode字符，算作两个字符的bug。
+```
+function countSymbols(string) {
+	return Array.from(string).length;
+}
+```
+
+## #2 Array.of()
+
+用于将一组值，转换为数组
+```
+Array.of(3, 11, 8);  // [3,11,8]
+Array.of(3);         // [3]
+Array.of(3).length;  // 1
+```
+该方法主要为了弥补数组构造函数`Array()`的不足。
+参数不同`Array()`行为会有差异。
+```
+Array(); // []
+Array(3); // [, , ,]
+Array(3, 11, 8); // [3, 11, 8]
+```
+
+Array.of()基本上可以用来代替`Array()`和`new Array()`,不存在由于参数不同而导致的重载。
+总是返回参数值组成的数组，无参数就返回一个空数组。
+
+Array.of()的模拟实现
+
+## #3 数组实例的copyWithin()
