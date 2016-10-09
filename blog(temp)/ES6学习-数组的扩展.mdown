@@ -104,4 +104,182 @@ Array.of()基本上可以用来代替`Array()`和`new Array()`,不存在由于�
 
 Array.of()的模拟实现
 
-## #3 数组实例的copyWithin()
+## #3 copyWithin()
+
+将指定位置的成员富之岛其他位置（会覆盖原有成员），返回当前数组。
+```
+Array.prototype.copyWithin(target, start = 0, end = this.lenght)
+```
+有三个参数（均为数值，不是自动转为数值）:
+1. target（必）： 从该位置开始替换数据。
+2. start（可）： 从该位置开始读取数据，默认为0。如果为负值，表示倒数。
+3. end（可）： 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数。
+
+```
+[1, 2, 3, 4, 5].copyWithin(0, 3)  // [4, 5, 3, 4, 5]
+```
+上面表示将数组三号位到数组结束的成员(4和5)，复制到从0号为开始的地方。
+
+示例：
+```
+// 将3号位复制到0号位
+[1, 2, 3, 4, 5].copyWithin(0, 3, 4)
+// [4, 2, 3, 4, 5]
+
+// -2相当于3号位，-1相当于4号位
+[1, 2, 3, 4, 5].copyWithin(0, -2, -1)
+// [4, 2, 3, 4, 5]
+
+// 将3号位复制到0号位
+[].copyWithin.call({length: 5, 3: 1}, 0, 3)
+// {0: 1, 3: 1, length: 5}
+/**
+ * 说明：通过Array.from({ length: 5, 3: 1 })可以得到数组[undefined, undefined, undefined, 1, undefined]
+ * 这个的意思就是说将数组三号位的值复制到一号位上
+ */
+
+// 将2号位到数组结束，复制到0号位
+var i32a = new Int32Array([1, 2, 3, 4, 5]);
+i32a.copyWithin(0, 2);
+// Int32Array [3, 4, 5, 4, 5]
+
+// 对于没有部署TypedArray的copyWithin方法的平台
+// 需要采用下面的写法
+[].copyWithin.call(new Int32Array([1, 2, 3, 4, 5]), 0, 3, 4);
+// Int32Array [4, 2, 3, 4, 5]
+```
+
+## #4 find()和findIndex()
+
+-	find - 用于找出第一个符合条件的数组成员。参数为回调函数，所有数组成员依次执行该函数，直到找到第一个返回值为`true`的成员，返回该成员。无符合，则返回`undefined`
+
+	回调函数接收三个参数: 
+	1. value - 当前的值
+	2. index - 当前的位置
+	3. arr - 原数组
+示例：
+```
+[1, 5, 10, 15].find(function(value, index, arr) {
+	return value > 9;
+})
+// 10
+```
+
+-	findIndex - 返回第一个符合条件的数组成员的位置。若所有均不符合，返回-1
+示例： 
+```
+[1, 5, 10, 15].findIndex(function(value, index, arr) {
+	return value > 9;
+})
+// 2
+```
+
+两个方法都可以接受第二个参数，用来绑定回调函数的`this`对象
+
+两个方法都可以发现`NaN`，弥补了`IndexOf`方法的不足。
+
+## #5 fill()
+
+使用给定值，填充一个数组。
+```
+['a', 'b', 'c'].fill(7)
+// [7, 7, 7]
+
+new Array(3).fill(7)
+// [7, 7, 7]
+```
+
+用于空数组的初始化非常方便。数组中已有的元素会被全部抹去。
+参数：
+1. 填充内容
+2. 指定填充的起始位置
+3. 指定填充的结束位置
+
+## #6 entries(), keys()和values()
+
+三个方法用来遍历数组。均返回一个遍历器对象（详见Iterator），可以用`for...of`循环进行遍历。
+区别： 
+-	keys()对键名的遍历
+-	values()对键值的遍历
+-	entries()对键值对的遍历
+
+```
+for (let index of ['a', 'b'].keys()) {
+  console.log(index);
+}
+// 0
+// 1
+
+for (let elem of ['a', 'b'].values()) {
+  console.log(elem);
+}
+// 'a'
+// 'b'
+
+for (let [index, elem] of ['a', 'b'].entries()) {
+  console.log(index, elem);
+}
+// 0 "a"
+// 1 "b"
+```
+
+如果不适用`for...of`循环，可以手动调用遍历器对象的`next`方法，进行遍历。
+```
+let letter = ['a', 'b', 'c'];
+let entries = letter.entries();
+console.log(entries.next().value); // [0, 'a']
+console.log(entries.next().value); // [1, 'b']
+console.log(entries.next().value); // [2, 'c']
+```
+
+## #7 includes()
+
+（ES7，Babel已支持）
+
+返回一个布尔值，表示某个数组是否包含给定的值，与字符串的`include`方法类似，
+
+```
+[1, 2, 3].includes(2);     // true
+[1, 2, 3].includes(4);     // false
+[1, 2, NaN].includes(NaN); // true
+```
+
+参数： 
+1. 表示要匹配的值
+2. 表示搜索的起始位置，为负表示倒数，大于数组长度时，重置为0
+
+在这个方法之前，通常使用`indexOf`方法，检查包含某个值。
+
+indexOf的缺点：
+1. 不够语义化，它的含义是找到参数值的第一个出现位置，所以要去比较是否不等于-1，表达起来不够直观。
+2. 它内部使用严格相当运算符（===）进行判断，这会导致对NaN的误判。
+
+检查是否支持，不支持，使用替代方法
+```
+const contains = (() =>
+  Array.prototype.includes
+    ? (arr, value) => arr.includes(value)
+    : (arr, value) => arr.some(el => el === value)
+)();
+contains(["foo", "bar"], "baz"); // => false
+```
+
+## #8 数组的空位
+
+指数组的某一个位置没有任何值，如，Array构造函数返回的数组都是空位。
+
+ES5对于空位的处理：
+-	forEach(), filter(), every() 和some()都会跳过空位。
+-	map()会跳过空位，但会保留这个值。
+-	join()和toString()会将空位视为undefined，而undefined和null会被处理成空字符串。
+
+ES6明确将空位转为`undefined`
+-	Array.from方法会将数组的空位，转为undefined，不会忽略空位。
+-	扩展运算符（...）也会将空位转为undefined。
+-	copyWithin()会连空位一起拷贝。
+-	fill()会将空位视为正常的数组位置。
+-	for...of循环也会遍历空位。
+-	entries()、keys()、values()、find()和findIndex()会将空位处理成undefined。
+-	map()方法会跳过空位。
+
+由于空位规则不统一，建议避免空位
